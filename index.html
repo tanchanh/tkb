@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thời Khoá Biểu - Dương Tấn Chánh</title>
+  <style>
+    /* ==========================================================================
+       1. RESET & BOX-SIZING
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ==========================================================================
+       2. BẢNG MÀU CHUẨN (11 MÃ MÀU QUY CHUẨN TẠI :ROOT)
+       ========================================================================== */
+    :root {
+      --c-blue: #0066B6;
+      --c-purple: #4020D0;
+      --c-lime: #7FDD0F;
+      --c-green: #009911;
+      --c-orange: #EE6000;
+      --c-red: #FF2040;
+      --c-black: #000000;
+      --c-dark-1: #1A1A1A;
+      --c-dark-2: #262626;
+      --c-gray: #CCCCCC;
+      --c-white: #FFFFFF;
+      --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    /* ==========================================================================
+       3. BỐ CỤC CHUNG & TYPOGRAPHY (FONT BODY: 1.1REM)
+       ========================================================================== */
+    body {
+      font-family: var(--font-stack);
+      font-size: 1.1rem;
+      font-weight: normal;
+      color: var(--c-white);
+      background-color: var(--c-black);
+      padding: 0.5rem;
+      padding-bottom: 5rem;
+      word-break: normal;
+      overflow-wrap: break-word;
+      line-height: 1.4;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body.scroll-locked {
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      color: var(--c-white);
+      margin-top: 0.1rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .author-signature {
+      font-size: 1.2rem;
+      font-weight: normal;
+      text-align: right;
+      color: var(--c-gray);
+      margin-bottom: 0.4rem;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--c-white);
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--c-lime);
+      outline-offset: 2px;
+    }
+
+    /* ==========================================================================
+       4. THANH NÚT TÁC VỤ
+       ========================================================================== */
+    .top-actions-bar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+      font-size: 1.0rem;
+      font-weight: bold;
+      padding: 0.4rem 0.85rem;
+      border-radius: 0.4rem;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      touch-action: manipulation;
+      transition: transform 0.08s ease;
+    }
+
+    .btn-action:active {
+      transform: scale(0.96);
+    }
+
+    .btn-action.btn-edit {
+      background-color: var(--c-orange);
+      border: 2px solid var(--c-orange);
+      color: var(--c-white);
+    }
+
+    .btn-action.btn-done {
+      background-color: var(--c-green);
+      border: 2px solid var(--c-green);
+      color: var(--c-white);
+    }
+
+    .btn-action.btn-reset {
+      background-color: var(--c-dark-1);
+      border: 2px solid var(--c-red);
+      color: var(--c-red);
+    }
+
+    /* ==========================================================================
+       5. BỘ CHỌN THỜI GIAN (THÁNG / NĂM / GIỜ VÀO HỌC)
+       ========================================================================== */
+    .date-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.5rem;
+      background-color: var(--c-dark-1);
+      border: 2px solid var(--c-dark-2);
+      border-radius: 0.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .date-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .date-strip label {
+      font-weight: bold;
+      color: var(--c-lime);
+      font-size: 1.0rem;
+    }
+
+    .date-separator {
+      font-weight: bold;
+      color: var(--c-lime);
+      margin: 0 0.1rem;
+      user-select: none;
+    }
+
+    .date-strip select,
+    .date-strip input {
+      font-family: inherit;
+      font-size: 1.0rem;
+      font-weight: bold;
+      padding: 0.25rem 0.3rem;
+      border-radius: 0.3rem;
+      border: 2px solid transparent;
+      background-color: transparent;
+      color: var(--c-white);
+      outline: none;
+      text-align: center;
+      -webkit-appearance: none;
+      appearance: none;
+      touch-action: manipulation;
+    }
+
+    .date-strip select:disabled,
+    .date-strip input:disabled {
+      opacity: 1;
+      -webkit-text-fill-color: var(--c-white);
+      color: var(--c-white);
+    }
+
+    .date-strip input#inp-year {
+      width: 4.8rem;
+    }
+
+    .date-strip input#inp-start-time {
+      width: 4.5rem;
+      letter-spacing: 0.05rem;
+    }
+
+    .date-strip input::placeholder {
+      color: var(--c-gray);
+      opacity: 0.5;
+    }
+
+    .edit-mode-active .date-strip {
+      border-color: var(--c-blue);
+    }
+
+    .edit-mode-active .date-strip select,
+    .edit-mode-active .date-strip input {
+      border: 2px solid var(--c-blue);
+      background-color: var(--c-black);
+    }
+
+    /* ==========================================================================
+       6. THANH ĐIỀU HƯỚNG THỨ
+       ========================================================================== */
+    .days-tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.35rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .day-tab-btn {
+      flex: 0 0 auto;
+      min-width: 5.0rem;
+      font-family: inherit;
+      font-size: 1.0rem;
+      font-weight: bold;
+      padding: 0.45rem 0.35rem;
+      border: 2px solid var(--c-gray);
+      background-color: var(--c-dark-1);
+      color: var(--c-white);
+      border-radius: 0.4rem;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      white-space: nowrap;
+      touch-action: manipulation;
+      transition: transform 0.08s ease;
+    }
+
+    .day-tab-btn:active {
+      transform: scale(0.96);
+    }
+
+    .day-tab-btn.active-tab {
+      background-color: var(--c-blue);
+      border-color: var(--c-white);
+      color: var(--c-white);
+    }
+
+    /* ==========================================================================
+       7. TIÊU ĐỀ & DANH SÁCH TIẾT HỌC
+       ========================================================================== */
+    .day-heading-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.45rem;
+      padding: 0 0.1rem;
+      gap: 0.4rem;
+    }
+
+    .edit-indicator {
+      display: none;
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: var(--c-orange);
+      white-space: nowrap;
+    }
+
+    .periods-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .period-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.65rem;
+      border: 2px solid var(--c-dark-2);
+      background-color: var(--c-dark-1);
+      border-left: 6px solid var(--c-blue);
+      border-radius: 0.5rem;
+    }
+
+    .period-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+    }
+
+    .p-name {
+      font-weight: bold;
+      font-size: 1.0rem;
+      color: var(--c-white);
+    }
+
+    .p-time {
+      font-size: 0.95rem;
+      color: var(--c-gray);
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    /* Thẻ môn học: Chống tràn khi tên môn dài */
+    .subject-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 5.8rem;
+      max-width: 8.5rem;
+      padding: 0.35rem 0.55rem;
+      font-size: 1.0rem;
+      font-weight: bold;
+      border-radius: 0.4rem;
+      user-select: none;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      touch-action: manipulation;
+      transition: transform 0.08s ease;
+    }
+
+    .edit-mode-active .subject-badge {
+      cursor: pointer;
+      outline: 2px dashed var(--c-orange);
+      outline-offset: 2px;
+    }
+
+    .edit-mode-active .subject-badge:active {
+      transform: scale(0.95);
+    }
+
+    /* ==========================================================================
+       8. PHỐI MÀU MÔN HỌC
+       ========================================================================== */
+    .sub-default {
+      background-color: var(--c-green);
+      color: var(--c-white);
+      border: 2px solid var(--c-green);
+    }
+
+    .sub-shl {
+      background-color: var(--c-purple);
+      color: var(--c-white);
+      border: 2px solid var(--c-purple);
+    }
+
+    .sub-gdtc {
+      background-color: var(--c-orange);
+      color: var(--c-white);
+      border: 2px solid var(--c-orange);
+    }
+
+    .sub-empty {
+      background-color: var(--c-black);
+      color: var(--c-gray);
+      border: 2px dashed var(--c-gray);
+    }
+
+    /* ==========================================================================
+       9. GHI CHÚ THEO THỨ (CAO 13.5REM)
+       ========================================================================== */
+    .day-note-box {
+      border: 2px solid var(--c-dark-2);
+      background-color: var(--c-dark-1);
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .day-note-box h2 {
+      margin-bottom: 0.4rem;
+    }
+
+    .day-note-textarea {
+      width: 100%;
+      min-height: 13.5rem;
+      font-family: inherit;
+      font-size: 1.05rem;
+      line-height: 1.45;
+      padding: 0.55rem;
+      border: 2px solid var(--c-dark-2);
+      background-color: var(--c-black);
+      border-radius: 0.4rem;
+      color: var(--c-white);
+      outline: none;
+      resize: none;
+      scroll-margin-bottom: 5rem;
+    }
+
+    .day-note-textarea:read-only {
+      border: 2px dashed var(--c-dark-2);
+    }
+
+    .edit-mode-active .day-note-textarea {
+      border: 2px solid var(--c-blue);
+    }
+
+    /* ==========================================================================
+       10. HỘP THOẠI CHỌN MÔN (CENTERED DIALOG)
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 0.25rem;
+      touch-action: none;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .picker-sheet {
+      width: 98%;
+      max-width: 25rem;
+      background-color: var(--c-dark-1);
+      border: 2px solid var(--c-blue);
+      border-radius: 0.5rem;
+      padding: 0.35rem 0.4rem;
+      max-height: 85vh;
+      max-height: 85dvh;
+      overflow-y: auto;
+      touch-action: pan-y;
+    }
+
+    .picker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.35rem;
+      border-bottom: 2px solid var(--c-dark-2);
+      margin-bottom: 0.45rem;
+    }
+
+    .sheet-title-text {
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: var(--c-white);
+    }
+
+    .btn-close-sheet {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: var(--c-gray);
+      cursor: pointer;
+      padding: 0 0.3rem;
+      touch-action: manipulation;
+    }
+
+    .custom-subject-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+
+    .custom-subject-input {
+      flex: 1 1 0;
+      min-width: 0;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: bold;
+      padding: 0.35rem 0.45rem;
+      border-radius: 0.4rem;
+      border: 2px solid var(--c-dark-2);
+      background-color: var(--c-black);
+      color: var(--c-white);
+      outline: none;
+      text-transform: uppercase;
+    }
+
+    .custom-subject-input:focus {
+      border-color: var(--c-blue);
+    }
+
+    .btn-add-sub {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      background-color: var(--c-blue);
+      border: 2px solid var(--c-blue);
+      color: var(--c-white);
+      padding: 0.35rem 0.55rem;
+      font-size: 0.95rem;
+    }
+
+    /* Đã thêm padding đệm an toàn để nút x không chạm viền cuộn */
+    .picker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(5.0rem, 1fr));
+      gap: 0.5rem;
+      padding: 0.4rem 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .custom-sub-item-wrap {
+      position: relative;
+      display: flex;
+      width: 100%;
+    }
+
+    .btn-subject-item {
+      width: 100%;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: bold;
+      padding: 0.5rem 0.2rem;
+      border-radius: 0.4rem;
+      border: 2px solid transparent;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      touch-action: manipulation;
+      transition: transform 0.08s ease;
+    }
+
+    .btn-subject-item:active {
+      transform: scale(0.95);
+    }
+
+    .btn-del-sub-badge {
+      position: absolute;
+      top: -0.35rem;
+      right: -0.35rem;
+      width: 1.3rem;
+      height: 1.3rem;
+      background-color: var(--c-red);
+      border: 2px solid var(--c-black);
+      border-radius: 50%;
+      color: var(--c-white);
+      font-size: 0.85rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 3;
+      padding: 0;
+      line-height: 1;
+      touch-action: manipulation;
+    }
+
+    .btn-sheet-cancel-btn {
+      width: 100%;
+      padding: 0.45rem;
+      background-color: var(--c-dark-2);
+      border: 2px solid var(--c-gray);
+      color: var(--c-white);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TIÊU ĐỀ & TÁC GIẢ -->
+  <h1>THỜI KHOÁ BIỂU</h1>
+  <div class="author-signature">Dương Tấn Chánh</div>
+
+  <!-- NÚT THAO TÁC -->
+  <div class="top-actions-bar">
+    <button type="button" class="btn-action btn-edit" id="btn-edit-toggle">Sửa</button>
+    <button type="button" class="btn-action btn-reset" id="btn-reset">Đặt Lại</button>
+  </div>
+
+  <!-- THÁNG / NĂM / GIỜ VÀO HỌC -->
+  <div class="date-strip">
+    <div class="date-group">
+      <label for="sel-month">Tháng</label>
+      <select id="sel-month" disabled>
+        <option value="1">01</option>
+        <option value="2">02</option>
+        <option value="3">03</option>
+        <option value="4">04</option>
+        <option value="5">05</option>
+        <option value="6">06</option>
+        <option value="7">07</option>
+        <option value="8">08</option>
+        <option value="9">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select>
+      <span class="date-separator">/</span>
+      <input type="text" id="inp-year" inputmode="numeric" placeholder="2024" disabled>
+    </div>
+
+    <span class="date-separator">•</span>
+    
+    <div class="date-group">
+      <label for="inp-start-time">Vào học</label>
+      <input type="text" id="inp-start-time" value="12:30" inputmode="numeric" placeholder="12:30" disabled>
+    </div>
+  </div>
+
+  <!-- CÁC NÚT THỨ: CANH GIỮA -->
+  <div class="days-tab-bar" role="tablist">
+    <button type="button" class="day-tab-btn" id="tab-btn-2" data-day="2" role="tab" aria-controls="list-periods">Thứ 2</button>
+    <button type="button" class="day-tab-btn" id="tab-btn-3" data-day="3" role="tab" aria-controls="list-periods">Thứ 3</button>
+    <button type="button" class="day-tab-btn" id="tab-btn-4" data-day="4" role="tab" aria-controls="list-periods">Thứ 4</button>
+    <button type="button" class="day-tab-btn" id="tab-btn-5" data-day="5" role="tab" aria-controls="list-periods">Thứ 5</button>
+    <button type="button" class="day-tab-btn" id="tab-btn-6" data-day="6" role="tab" aria-controls="list-periods">Thứ 6</button>
+    <button type="button" class="day-tab-btn" id="tab-btn-7" data-day="7" role="tab" aria-controls="list-periods">Thứ 7</button>
+  </div>
+
+  <!-- TIÊU ĐỀ NGÀY -->
+  <div class="day-heading-bar">
+    <h2 id="heading-day-title">Thứ Hai</h2>
+    <span class="edit-indicator" id="hint-edit">&#9998; Chạm môn để đổi</span>
+  </div>
+
+  <!-- DANH SÁCH 5 TIẾT CHIỀU -->
+  <div class="periods-list" id="list-periods"></div>
+
+  <!-- GHI CHÚ THEO TỪNG THỨ -->
+  <div class="day-note-box">
+    <h2 id="day-note-heading">Ghi chú Thứ Hai</h2>
+    <textarea class="day-note-textarea" id="txt-day-note" readonly></textarea>
+  </div>
+
+  <!-- HỘP THOẠI CHỌN MÔN (CENTERED MODAL) -->
+  <div class="modal-backdrop" id="modal-picker" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <div class="picker-sheet">
+      <div class="picker-header">
+        <h3 class="sheet-title-text" id="sheet-title">Chọn môn</h3>
+        <button type="button" class="btn-close-sheet" id="btn-sheet-close" aria-label="Đóng">&times;</button>
+      </div>
+
+      <div class="custom-subject-bar">
+        <input type="text" id="inp-custom-subject" class="custom-subject-input" placeholder="Tự nhập môn khác..." maxlength="15">
+        <button type="button" id="btn-add-custom-subject" class="btn-action btn-add-sub">+ Chọn</button>
+      </div>
+
+      <div class="picker-grid" id="sheet-grid"></div>
+
+      <button type="button" class="btn-action btn-sheet-cancel-btn" id="btn-sheet-cancel">
+        Đóng
+      </button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT XỬ LÝ TOÀN BỘ LOGIC -->
+  <script>
+    (function () {
+      "use strict";
+
+      const BASE_SUBJECT_LIST = [
+        "TOÁN", "VĂN", "ANH", "KH TN", "TIN", "SỬ", "ĐỊA", "GD TC",
+        "C.NGHỆ", "GD CD", "GD ĐP", "NHẠC", "VẼ", "HĐ TN", "S H L", "TRỐNG"
+      ];
+
+      const NOW = new Date();
+      const CURRENT_REAL_YEAR = NOW.getFullYear();
+      const CURRENT_REAL_MONTH = NOW.getMonth() + 1;
+
+      // BỘ PHÂN TÍCH GIỜ THÔNG MINH (CHẤP NHẬN 1230, 715, 12:30, 12.30...)
+      function parseTimeString(timeStr) {
+        if (!timeStr) return { h: 12, m: 30 };
+        let clean = String(timeStr).trim().replace(/[hH.\s]/g, ":");
+        if (/^\d{3,4}$/.test(clean)) {
+          if (clean.length === 3) {
+            clean = clean.slice(0, 1) + ":" + clean.slice(1);
+          } else {
+            clean = clean.slice(0, 2) + ":" + clean.slice(2);
+          }
+        }
+        let parts = clean.split(":");
+        let h = parseInt(parts[0], 10);
+        let m = parseInt(parts[1], 10);
+        if (isNaN(h) || h < 0 || h > 23) h = 12;
+        if (isNaN(m) || m < 0 || m > 59) m = 30;
+        return { h, m };
+      }
+
+      function formatMinutesToTime(totalMins) {
+        let h = Math.floor(totalMins / 60) % 24;
+        let m = totalMins % 60;
+        let mStr = m < 10 ? "0" + m : String(m);
+        let displayH = h > 12 ? h - 12 : (h === 0 ? 12 : h);
+        return displayH + ":" + mStr;
+      }
+
+      function calculateTimeSlots(startTimeStr) {
+        const { h, m } = parseTimeString(startTimeStr);
+        let currentMin = h * 60 + m;
+        const breaks = [5, 5, 15, 5];
+        const slots = [];
+
+        for (let i = 0; i < 5; i++) {
+          let pStart = currentMin;
+          let pEnd = pStart + 45;
+          slots.push({
+            label: "Tiết " + (i + 1),
+            gio: formatMinutesToTime(pStart) + " - " + formatMinutesToTime(pEnd)
+          });
+          if (i < 4) {
+            currentMin = pEnd + breaks[i];
+          }
+        }
+        return slots;
+      }
+
+      const DEFAULT_DATA = {
+        nam: CURRENT_REAL_YEAR,
+        thang: CURRENT_REAL_MONTH,
+        gioVaoHoc: "12:30",
+        monHoc: {
+          "2": ["TIN", "GD TC", "ANH", "HĐ TN", "HĐ TN"],
+          "3": ["TOÁN", "TOÁN", "VĂN", "KH TN", "ĐỊA"],
+          "4": ["NHẠC", "GD TC", "GD CD", "C.NGHỆ", "TOÁN"],
+          "5": ["VẼ", "ANH", "GD ĐP", "VĂN", "SỬ"],
+          "6": ["TOÁN", "VĂN", "VĂN", "KH TN", "KH TN"],
+          "7": ["SỬ", "KH TN", "HĐ TN", "C.NGHỆ", "ANH"]
+        },
+        ghiChuTheoThu: {
+          "2": "",
+          "3": "",
+          "4": "",
+          "5": "",
+          "6": "",
+          "7": ""
+        },
+        monTuyChon: []
+      };
+
+      const STORAGE_KEY = "tkb_final_perfect_app_v5";
+
+      let appData = loadData();
+      let currentDay = getTodayIndex();
+      let isEditMode = false;
+      let editTargetIndex = null;
+      let isToggling = false;
+
+      // DOM ELEMENTS
+      const selMonth = document.getElementById("sel-month");
+      const inpYear = document.getElementById("inp-year");
+      const inpStartTime = document.getElementById("inp-start-time");
+      const btnEditToggle = document.getElementById("btn-edit-toggle");
+      const btnReset = document.getElementById("btn-reset");
+      const daysTabBar = document.querySelector(".days-tab-bar");
+      const tabButtons = Array.from(daysTabBar.querySelectorAll(".day-tab-btn"));
+      const headingDayTitle = document.getElementById("heading-day-title");
+      const hintEdit = document.getElementById("hint-edit");
+      const listPeriods = document.getElementById("list-periods");
+      const dayNoteHeading = document.getElementById("day-note-heading");
+      const txtDayNote = document.getElementById("txt-day-note");
+      const modalPicker = document.getElementById("modal-picker");
+      const sheetTitle = document.getElementById("sheet-title");
+      const sheetGrid = document.getElementById("sheet-grid");
+      const inpCustomSubject = document.getElementById("inp-custom-subject");
+      const btnAddCustomSubject = document.getElementById("btn-add-custom-subject");
+      const btnSheetClose = document.getElementById("btn-sheet-close");
+      const btnSheetCancel = document.getElementById("btn-sheet-cancel");
+
+      function getSubjectColorClass(name) {
+        const clean = (name || "").replace(/\s+/g, ' ').trim().toUpperCase();
+        if (clean === "S H L" || clean.includes("S H L")) return "sub-shl";
+        if (clean === "GD TC") return "sub-gdtc";
+        if (clean === "TRỐNG") return "sub-empty";
+        return "sub-default";
+      }
+
+      function loadData() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && typeof parsed === "object" && parsed.monHoc) {
+              if (typeof parsed.nam !== "number" || parsed.nam < 2020 || parsed.nam > 2099) parsed.nam = CURRENT_REAL_YEAR;
+              if (typeof parsed.thang !== "number" || parsed.thang < 1 || parsed.thang > 12) parsed.thang = CURRENT_REAL_MONTH;
+              if (typeof parsed.gioVaoHoc !== "string") parsed.gioVaoHoc = "12:30";
+              if (!parsed.ghiChuTheoThu || typeof parsed.ghiChuTheoThu !== "object") {
+                parsed.ghiChuTheoThu = { "2": "", "3": "", "4": "", "5": "", "6": "", "7": "" };
+              }
+              if (!Array.isArray(parsed.monTuyChon)) {
+                parsed.monTuyChon = [];
+              }
+
+              for (let d = 2; d <= 7; d++) {
+                const key = String(d);
+                if (!Array.isArray(parsed.monHoc[key])) {
+                  parsed.monHoc[key] = DEFAULT_DATA.monHoc[key];
+                } else {
+                  for (let i = 0; i < 5; i++) {
+                    const item = parsed.monHoc[key][i];
+                    parsed.monHoc[key][i] = (typeof item === "string" ? item.trim() : (item && item.mon ? item.mon.trim() : "TRỐNG"));
+                  }
+                }
+              }
+              return parsed;
+            }
+          }
+        } catch (e) {
+          console.warn("Dữ liệu lưu trữ bị lỗi, hoàn tác về mặc định.", e);
+        }
+        return JSON.parse(JSON.stringify(DEFAULT_DATA));
+      }
+
+      function silentSave() {
+        try {
+          if (isEditMode && txtDayNote) {
+            if (!appData.ghiChuTheoThu) appData.ghiChuTheoThu = {};
+            appData.ghiChuTheoThu[String(currentDay)] = txtDayNote.value;
+          }
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+        } catch (e) {
+          console.warn("Không thể lưu localStorage.", e);
+        }
+      }
+
+      function getTodayIndex() {
+        const d = new Date().getDay();
+        if (d >= 1 && d <= 6) return d + 1;
+        return 2;
+      }
+
+      const DAY_NAMES = {
+        "2": "Thứ Hai",
+        "3": "Thứ Ba",
+        "4": "Thứ Tư",
+        "5": "Thứ Năm",
+        "6": "Thứ Sáu",
+        "7": "Thứ Bảy"
+      };
+
+      let calculatedSlots = calculateTimeSlots(appData.gioVaoHoc || "12:30");
+
+      const periodCards = calculatedSlots.map((slot, index) => {
+        const card = document.createElement("div");
+        card.className = "period-card";
+
+        const metaBox = document.createElement("div");
+        metaBox.className = "period-meta";
+
+        const pName = document.createElement("span");
+        pName.className = "p-name";
+        pName.textContent = slot.label;
+
+        const pTime = document.createElement("span");
+        pTime.className = "p-time";
+        pTime.textContent = slot.gio;
+
+        metaBox.appendChild(pName);
+        metaBox.appendChild(pTime);
+
+        const badge = document.createElement("div");
+        badge.className = "subject-badge";
+        badge.tabIndex = 0;
+
+        const handleSelect = () => {
+          if (isEditMode) {
+            openPicker(index, slot.label);
+          }
+        };
+
+        badge.addEventListener("click", handleSelect);
+        badge.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleSelect();
+          }
+        });
+
+        card.appendChild(metaBox);
+        card.appendChild(badge);
+        listPeriods.appendChild(card);
+
+        return {
+          badge,
+          update(subjectName) {
+            badge.textContent = subjectName;
+            badge.title = subjectName;
+            badge.className = "subject-badge " + getSubjectColorClass(subjectName);
+          },
+          updateTime(timeString) {
+            pTime.textContent = timeString;
+          }
+        };
+      });
+
+      function buildPickerSheet() {
+        sheetGrid.innerHTML = "";
+        const customList = Array.isArray(appData.monTuyChon) ? appData.monTuyChon : [];
+
+        BASE_SUBJECT_LIST.forEach(subName => {
+          if (subName === "TRỐNG") return;
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "btn-subject-item " + getSubjectColorClass(subName);
+          btn.textContent = subName;
+          btn.addEventListener("click", () => {
+            applySubject(subName);
+          });
+          sheetGrid.appendChild(btn);
+        });
+
+        customList.forEach(customSubName => {
+          if (BASE_SUBJECT_LIST.includes(customSubName)) return;
+
+          const wrap = document.createElement("div");
+          wrap.className = "custom-sub-item-wrap";
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "btn-subject-item " + getSubjectColorClass(customSubName);
+          btn.textContent = customSubName;
+          btn.addEventListener("click", () => {
+            applySubject(customSubName);
+          });
+
+          const delBadge = document.createElement("button");
+          delBadge.type = "button";
+          delBadge.className = "btn-del-sub-badge";
+          delBadge.textContent = "×";
+          delBadge.title = "Xoá môn " + customSubName;
+
+          delBadge.addEventListener("click", (e) => {
+            e.stopPropagation();
+            deleteCustomSubject(customSubName);
+          });
+
+          wrap.appendChild(btn);
+          wrap.appendChild(delBadge);
+          sheetGrid.appendChild(wrap);
+        });
+
+        const emptyBtn = document.createElement("button");
+        emptyBtn.type = "button";
+        emptyBtn.className = "btn-subject-item sub-empty";
+        emptyBtn.textContent = "TRỐNG";
+        emptyBtn.addEventListener("click", () => {
+          applySubject("TRỐNG");
+        });
+        sheetGrid.appendChild(emptyBtn);
+      }
+
+      function deleteCustomSubject(subjectToDelete) {
+        const msg = "Bạn có chắc chắn muốn xoá môn \"" + subjectToDelete + "\" không?\n" +
+                    "Tất cả các tiết học có môn \"" + subjectToDelete + "\" ở tất cả các Thứ sẽ bị xoá luôn (chuyển về TRỐNG).";
+        
+        if (confirm(msg)) {
+          if (Array.isArray(appData.monTuyChon)) {
+            appData.monTuyChon = appData.monTuyChon.filter(item => item !== subjectToDelete);
+          }
+
+          for (let d = 2; d <= 7; d++) {
+            const key = String(d);
+            if (Array.isArray(appData.monHoc[key])) {
+              for (let i = 0; i < 5; i++) {
+                if (appData.monHoc[key][i] === subjectToDelete) {
+                  appData.monHoc[key][i] = "TRỐNG";
+                }
+              }
+            }
+          }
+
+          silentSave();
+          buildPickerSheet();
+          render();
+        }
+      }
+
+      function updateCalculatedScheduleTimes(timeStr) {
+        calculatedSlots = calculateTimeSlots(timeStr);
+        for (let i = 0; i < 5; i++) {
+          periodCards[i].updateTime(calculatedSlots[i].gio);
+        }
+      }
+
+      function render() {
+        selMonth.value = String(appData.thang || CURRENT_REAL_MONTH);
+        inpYear.value = String(appData.nam || CURRENT_REAL_YEAR);
+        
+        const { h, m } = parseTimeString(appData.gioVaoHoc || "12:30");
+        const formattedStart = (h < 10 ? "0" + h : h) + ":" + (m < 10 ? "0" + m : m);
+        inpStartTime.value = formattedStart;
+
+        selMonth.disabled = !isEditMode;
+        inpYear.disabled = !isEditMode;
+        inpStartTime.disabled = !isEditMode;
+        txtDayNote.readOnly = !isEditMode;
+
+        if (isEditMode) {
+          btnEditToggle.className = "btn-action btn-done";
+          btnEditToggle.textContent = "Xong";
+          hintEdit.style.display = "inline";
+          document.body.classList.add("edit-mode-active");
+        } else {
+          btnEditToggle.className = "btn-action btn-edit";
+          btnEditToggle.textContent = "Sửa";
+          hintEdit.style.display = "none";
+          document.body.classList.remove("edit-mode-active");
+        }
+
+        tabButtons.forEach(tab => {
+          const val = Number(tab.getAttribute("data-day"));
+          const isSelected = (val === currentDay);
+          tab.classList.toggle("active-tab", isSelected);
+          tab.setAttribute("aria-selected", isSelected ? "true" : "false");
+        });
+
+        const currentDayName = DAY_NAMES[String(currentDay)] || "Thứ Hai";
+        headingDayTitle.textContent = currentDayName;
+        dayNoteHeading.textContent = "Ghi chú " + currentDayName;
+
+        updateCalculatedScheduleTimes(appData.gioVaoHoc || "12:30");
+
+        const dayList = (appData.monHoc && appData.monHoc[String(currentDay)]) || [];
+        for (let i = 0; i < 5; i++) {
+          periodCards[i].update((dayList[i] || "TRỐNG").trim());
+        }
+
+        txtDayNote.value = (appData.ghiChuTheoThu && appData.ghiChuTheoThu[String(currentDay)]) || "";
+      }
+
+      function openPicker(index, label) {
+        editTargetIndex = index;
+        sheetTitle.textContent = label + " - " + (DAY_NAMES[String(currentDay)] || "");
+        inpCustomSubject.value = "";
+        modalPicker.classList.add("open");
+        document.body.classList.add("scroll-locked");
+
+        try {
+          history.pushState({ modalOpen: true }, "");
+        } catch (e) {}
+
+        btnSheetClose.focus();
+      }
+
+      function closePicker(shouldTriggerBack = true) {
+        if (!modalPicker.classList.contains("open")) return;
+        modalPicker.classList.remove("open");
+        document.body.classList.remove("scroll-locked");
+
+        if (shouldTriggerBack && history.state && history.state.modalOpen) {
+          try {
+            history.back();
+          } catch (e) {}
+        }
+
+        if (editTargetIndex !== null && periodCards[editTargetIndex]) {
+          periodCards[editTargetIndex].badge.focus();
+        }
+        editTargetIndex = null;
+      }
+
+      function applySubject(name) {
+        if (editTargetIndex !== null) {
+          const dayKey = String(currentDay);
+          if (!appData.monHoc[dayKey]) appData.monHoc[dayKey] = [];
+          appData.monHoc[dayKey][editTargetIndex] = name;
+          silentSave();
+
+          periodCards[editTargetIndex].update(name);
+        }
+        closePicker(true);
+      }
+
+      function handleAddCustomSubject() {
+        const val = inpCustomSubject.value.replace(/\s+/g, ' ').trim().toUpperCase();
+        if (!val) return;
+
+        if (!BASE_SUBJECT_LIST.includes(val)) {
+          if (!Array.isArray(appData.monTuyChon)) appData.monTuyChon = [];
+          if (!appData.monTuyChon.includes(val)) {
+            appData.monTuyChon.push(val);
+            buildPickerSheet();
+          }
+        }
+
+        applySubject(val);
+      }
+
+      btnAddCustomSubject.addEventListener("click", handleAddCustomSubject);
+      inpCustomSubject.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          handleAddCustomSubject();
+        }
+      });
+
+      window.addEventListener("popstate", () => {
+        if (modalPicker.classList.contains("open")) {
+          closePicker(false);
+        }
+      });
+
+      // TỰ ĐỘNG CHỐT GIỜ NẾU ĐANG GÕ DỞ MÀ BẤM CHUYỂN THỨ
+      daysTabBar.addEventListener("click", (e) => {
+        const btn = e.target.closest(".day-tab-btn");
+        if (!btn) return;
+        const val = Number(btn.getAttribute("data-day"));
+        if (val !== currentDay) {
+          if (isEditMode && document.activeElement === inpStartTime) {
+            commitStartTime();
+          }
+          silentSave();
+          currentDay = val;
+          render();
+        }
+      });
+
+      daysTabBar.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+          e.preventDefault();
+          let delta = (e.key === "ArrowRight") ? 1 : -1;
+          let nextDay = currentDay + delta;
+          if (nextDay > 7) nextDay = 2;
+          if (nextDay < 2) nextDay = 7;
+          silentSave();
+          currentDay = nextDay;
+          render();
+          const targetTab = document.getElementById("tab-btn-" + nextDay);
+          if (targetTab) targetTab.focus();
+        }
+      });
+
+      btnEditToggle.addEventListener("click", () => {
+        if (isToggling) return;
+        isToggling = true;
+
+        isEditMode = !isEditMode;
+        if (!isEditMode) {
+          if (document.activeElement && typeof document.activeElement.blur === "function") {
+            document.activeElement.blur();
+          }
+        }
+        render();
+
+        setTimeout(() => {
+          isToggling = false;
+        }, 150);
+      });
+
+      selMonth.addEventListener("change", (e) => {
+        appData.thang = Number(e.target.value);
+        silentSave();
+      });
+
+      // XỬ LÝ Ô NĂM: TỰ ĐỘNG XOÁ SẴN KHI CHẠM & HỖ TRỢ PHÍM ENTER
+      function commitYear() {
+        let typed = inpYear.value.trim();
+        if (!typed) {
+          inpYear.value = inpYear.dataset.oldVal || String(CURRENT_REAL_YEAR);
+        } else {
+          let val = Number(typed);
+          if (isNaN(val) || val < 2020) val = CURRENT_REAL_YEAR;
+          if (val > 2099) val = 2099;
+          inpYear.value = String(val);
+          appData.nam = val;
+          silentSave();
+        }
+      }
+
+      inpYear.addEventListener("focus", function () {
+        if (!isEditMode) return;
+        this.dataset.oldVal = this.value;
+        this.placeholder = this.value;
+        this.value = "";
+      });
+
+      inpYear.addEventListener("blur", commitYear);
+      inpYear.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          commitYear();
+          inpYear.blur();
+        }
+      });
+
+      // XỬ LÝ Ô GIỜ VÀO HỌC: TỰ ĐỘNG XOÁ SẴN KHI CHẠM & HỖ TRỢ PHÍM ENTER
+      function commitStartTime() {
+        let typed = inpStartTime.value.trim();
+        if (!typed) {
+          inpStartTime.value = inpStartTime.dataset.oldVal || "12:30";
+        } else {
+          const { h, m } = parseTimeString(typed);
+          const cleanTime = (h < 10 ? "0" + h : h) + ":" + (m < 10 ? "0" + m : m);
+          inpStartTime.value = cleanTime;
+          appData.gioVaoHoc = cleanTime;
+          updateCalculatedScheduleTimes(cleanTime);
+          silentSave();
+        }
+      }
+
+      inpStartTime.addEventListener("focus", function () {
+        if (!isEditMode) return;
+        this.dataset.oldVal = this.value;
+        this.placeholder = this.value;
+        this.value = "";
+      });
+
+      inpStartTime.addEventListener("blur", commitStartTime);
+      inpStartTime.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          commitStartTime();
+          inpStartTime.blur();
+        }
+      });
+
+      function saveCurrentDayNote() {
+        if (isEditMode) {
+          if (!appData.ghiChuTheoThu) appData.ghiChuTheoThu = {};
+          appData.ghiChuTheoThu[String(currentDay)] = txtDayNote.value;
+          silentSave();
+        }
+      }
+
+      txtDayNote.addEventListener("input", saveCurrentDayNote);
+      txtDayNote.addEventListener("change", saveCurrentDayNote);
+
+      btnSheetClose.addEventListener("click", () => closePicker(true));
+      btnSheetCancel.addEventListener("click", () => closePicker(true));
+
+      modalPicker.addEventListener("click", (e) => {
+        if (e.target === modalPicker) closePicker(true);
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modalPicker.classList.contains("open")) {
+          closePicker(true);
+        }
+      });
+
+      btnReset.addEventListener("click", () => {
+        btnReset.disabled = true;
+        if (confirm("Đặt lại toàn bộ thời khoá biểu về mặc định ban đầu?")) {
+          const fresh = JSON.parse(JSON.stringify(DEFAULT_DATA));
+          fresh.nam = new Date().getFullYear();
+          fresh.thang = new Date().getMonth() + 1;
+          fresh.gioVaoHoc = "12:30";
+          appData = fresh;
+          silentSave();
+          buildPickerSheet();
+          render();
+        }
+        setTimeout(() => {
+          btnReset.disabled = false;
+        }, 300);
+      });
+
+      window.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+          silentSave();
+        }
+      });
+      window.addEventListener("beforeunload", silentSave);
+
+      // KHỞI CHẠY
+      buildPickerSheet();
+      render();
+    })();
+  </script>
+</body>
+</html>
