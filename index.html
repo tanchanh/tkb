@@ -33,11 +33,11 @@
     }
 
     /* ==========================================================================
-       3. BỐ CỤC CHUNG & TYPOGRAPHY (FONT BODY: 1.1REM)
+       3. BỐ CỤC CHUNG & TYPOGRAPHY (FONT TỐI THIỂU: 1.2REM)
        ========================================================================== */
     body {
       font-family: var(--font-stack);
-      font-size: 1.1rem;
+      font-size: 1.2rem; /* Font body tối thiểu 1.2rem */
       font-weight: normal;
       color: var(--c-white);
       background-color: var(--c-black);
@@ -45,7 +45,7 @@
       padding-bottom: 5rem;
       word-break: normal;
       overflow-wrap: break-word;
-      line-height: 1.4;
+      line-height: 1.45;
       -webkit-text-size-adjust: 100%;
     }
 
@@ -54,8 +54,9 @@
       touch-action: none;
     }
 
+    /* Tiêu đề H1 - H5 tăng thêm 0.1rem */
     h1 {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: bold;
       text-align: center;
       color: var(--c-white);
@@ -72,7 +73,19 @@
     }
 
     h2 {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: var(--c-white);
+    }
+
+    h3 {
       font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--c-white);
+    }
+
+    h4, h5 {
+      font-size: 1.2rem;
       font-weight: bold;
       color: var(--c-white);
     }
@@ -97,9 +110,9 @@
       align-items: center;
       justify-content: center;
       font-family: inherit;
-      font-size: 1.0rem;
+      font-size: 1.2rem; /* Tối thiểu 1.2rem */
       font-weight: bold;
-      padding: 0.4rem 0.85rem;
+      padding: 0.45rem 0.95rem;
       border-radius: 0.4rem;
       cursor: pointer;
       user-select: none;
@@ -131,7 +144,7 @@
     }
 
     /* ==========================================================================
-       5. BỘ CHỌN THỜI GIAN (THÁNG / NĂM / GIỜ VÀO HỌC)
+       5. BỘ CHỌN THỜI GIAN (FONT 1.2REM)
        ========================================================================== */
     .date-strip {
       display: flex;
@@ -139,7 +152,7 @@
       align-items: center;
       justify-content: center;
       gap: 0.4rem;
-      padding: 0.35rem 0.5rem;
+      padding: 0.4rem 0.5rem;
       background-color: var(--c-dark-1);
       border: 2px solid var(--c-dark-2);
       border-radius: 0.4rem;
@@ -155,7 +168,7 @@
     .date-strip label {
       font-weight: bold;
       color: var(--c-lime);
-      font-size: 1.0rem;
+      font-size: 1.2rem;
     }
 
     .date-separator {
@@ -163,14 +176,15 @@
       color: var(--c-lime);
       margin: 0 0.1rem;
       user-select: none;
+      font-size: 1.2rem;
     }
 
     .date-strip select,
     .date-strip input {
       font-family: inherit;
-      font-size: 1.0rem;
+      font-size: 1.2rem;
       font-weight: bold;
-      padding: 0.25rem 0.3rem;
+      padding: 0.25rem 0.35rem;
       border-radius: 0.3rem;
       border: 2px solid transparent;
       background-color: transparent;
@@ -190,11 +204,11 @@
     }
 
     .date-strip input#inp-year {
-      width: 4.8rem;
+      width: 5.6rem;
     }
 
     .date-strip input#inp-start-time {
-      width: 4.5rem;
+      width: 5.0rem;
       letter-spacing: 0.05rem;
     }
 
@@ -214,23 +228,23 @@
     }
 
     /* ==========================================================================
-       6. THANH ĐIỀU HƯỚNG THỨ
+       6. THANH ĐIỀU HƯỚNG THỨ (FONT 1.2REM)
        ========================================================================== */
     .days-tab-bar {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.35rem;
+      gap: 0.4rem;
       margin-bottom: 0.5rem;
     }
 
     .day-tab-btn {
       flex: 0 0 auto;
-      min-width: 5.0rem;
+      min-width: 5.4rem;
       font-family: inherit;
-      font-size: 1.0rem;
+      font-size: 1.2rem;
       font-weight: bold;
-      padding: 0.45rem 0.35rem;
+      padding: 0.45rem 0.4rem;
       border: 2px solid var(--c-gray);
       background-color: var(--c-dark-1);
       color: var(--c-white);
@@ -254,7 +268,7 @@
     }
 
     /* ==========================================================================
-       7. TIÊU ĐỀ & DANH SÁCH TIẾT HỌC
+       7. TIÊU ĐỀ & DANH SÁCH TIẾT HỌC (FONT 1.2REM)
        ========================================================================== */
     .day-heading-bar {
       display: flex;
@@ -267,7 +281,7 @@
 
     .edit-indicator {
       display: none;
-      font-size: 0.9rem;
+      font-size: 1.2rem;
       font-weight: bold;
       color: var(--c-orange);
       white-space: nowrap;
@@ -284,7 +298,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.5rem 0.65rem;
+      padding: 0.55rem 0.7rem;
       border: 2px solid var(--c-dark-2);
       background-color: var(--c-dark-1);
       border-left: 6px solid var(--c-blue);
@@ -299,26 +313,25 @@
 
     .p-name {
       font-weight: bold;
-      font-size: 1.0rem;
+      font-size: 1.2rem;
       color: var(--c-white);
     }
 
     .p-time {
-      font-size: 0.95rem;
+      font-size: 1.2rem;
       color: var(--c-gray);
       font-weight: bold;
       white-space: nowrap;
     }
 
-    /* Thẻ môn học: Chống tràn khi tên môn dài */
     .subject-badge {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 5.8rem;
-      max-width: 8.5rem;
-      padding: 0.35rem 0.55rem;
-      font-size: 1.0rem;
+      min-width: 6.2rem;
+      max-width: 9.5rem;
+      padding: 0.4rem 0.6rem;
+      font-size: 1.2rem;
       font-weight: bold;
       border-radius: 0.4rem;
       user-select: none;
@@ -368,7 +381,7 @@
     }
 
     /* ==========================================================================
-       9. GHI CHÚ THEO THỨ (CAO 13.5REM)
+       9. GHI CHÚ THEO THỨ (FONT 1.2REM, CAO 13.5REM)
        ========================================================================== */
     .day-note-box {
       border: 2px solid var(--c-dark-2);
@@ -386,7 +399,7 @@
       width: 100%;
       min-height: 13.5rem;
       font-family: inherit;
-      font-size: 1.05rem;
+      font-size: 1.2rem;
       line-height: 1.45;
       padding: 0.55rem;
       border: 2px solid var(--c-dark-2);
@@ -407,7 +420,7 @@
     }
 
     /* ==========================================================================
-       10. HỘP THOẠI CHỌN MÔN (CENTERED DIALOG)
+       10. HỘP THOẠI CHỌN MÔN (CENTERED MODAL ĐẸP MẮT)
        ========================================================================== */
     .modal-backdrop {
       position: fixed;
@@ -430,15 +443,16 @@
 
     .picker-sheet {
       width: 98%;
-      max-width: 25rem;
+      max-width: 26rem;
       background-color: var(--c-dark-1);
       border: 2px solid var(--c-blue);
-      border-radius: 0.5rem;
-      padding: 0.35rem 0.4rem;
+      border-radius: 0.6rem;
+      padding: 0.45rem 0.5rem;
       max-height: 85vh;
       max-height: 85dvh;
       overflow-y: auto;
       touch-action: pan-y;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
     }
 
     .picker-header {
@@ -450,16 +464,10 @@
       margin-bottom: 0.45rem;
     }
 
-    .sheet-title-text {
-      font-size: 1.15rem;
-      font-weight: bold;
-      color: var(--c-white);
-    }
-
     .btn-close-sheet {
       background: none;
       border: none;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: bold;
       color: var(--c-gray);
       cursor: pointer;
@@ -479,7 +487,7 @@
       flex: 1 1 0;
       min-width: 0;
       font-family: inherit;
-      font-size: 0.95rem;
+      font-size: 1.2rem;
       font-weight: bold;
       padding: 0.35rem 0.45rem;
       border-radius: 0.4rem;
@@ -500,14 +508,13 @@
       background-color: var(--c-blue);
       border: 2px solid var(--c-blue);
       color: var(--c-white);
-      padding: 0.35rem 0.55rem;
-      font-size: 0.95rem;
+      padding: 0.35rem 0.65rem;
+      font-size: 1.2rem;
     }
 
-    /* Đã thêm padding đệm an toàn để nút x không chạm viền cuộn */
     .picker-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(5.0rem, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(5.8rem, 1fr));
       gap: 0.5rem;
       padding: 0.4rem 0.25rem;
       margin-bottom: 0.5rem;
@@ -522,7 +529,7 @@
     .btn-subject-item {
       width: 100%;
       font-family: inherit;
-      font-size: 0.95rem;
+      font-size: 1.2rem;
       font-weight: bold;
       padding: 0.5rem 0.2rem;
       border-radius: 0.4rem;
@@ -542,13 +549,13 @@
       position: absolute;
       top: -0.35rem;
       right: -0.35rem;
-      width: 1.3rem;
-      height: 1.3rem;
+      width: 1.4rem;
+      height: 1.4rem;
       background-color: var(--c-red);
       border: 2px solid var(--c-black);
       border-radius: 50%;
       color: var(--c-white);
-      font-size: 0.85rem;
+      font-size: 1.0rem;
       font-weight: bold;
       display: flex;
       align-items: center;
@@ -565,6 +572,58 @@
       padding: 0.45rem;
       background-color: var(--c-dark-2);
       border: 2px solid var(--c-gray);
+      color: var(--c-white);
+      font-size: 1.2rem;
+    }
+
+    /* ==========================================================================
+       11. POPUP XÁC NHẬN NỘI BỘ TUYỆT ĐẸP (CUSTOM CONFIRM MODAL)
+       ========================================================================== */
+    .confirm-box {
+      width: 92%;
+      max-width: 24rem;
+      background-color: var(--c-dark-1);
+      border: 2px solid var(--c-orange);
+      border-radius: 0.6rem;
+      padding: 1.0rem;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.9);
+      text-align: center;
+    }
+
+    .confirm-title {
+      color: var(--c-orange);
+      margin-bottom: 0.6rem;
+    }
+
+    .confirm-msg {
+      font-size: 1.2rem;
+      color: var(--c-white);
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+      text-align: left;
+    }
+
+    .confirm-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.6rem;
+    }
+
+    .btn-confirm-cancel {
+      background-color: var(--c-dark-2);
+      border: 2px solid var(--c-gray);
+      color: var(--c-white);
+    }
+
+    .btn-confirm-ok {
+      background-color: var(--c-blue);
+      border: 2px solid var(--c-blue);
+      color: var(--c-white);
+    }
+
+    .btn-confirm-danger {
+      background-color: var(--c-red);
+      border: 2px solid var(--c-red);
       color: var(--c-white);
     }
   </style>
@@ -636,11 +695,11 @@
     <textarea class="day-note-textarea" id="txt-day-note" readonly></textarea>
   </div>
 
-  <!-- HỘP THOẠI CHỌN MÔN (CENTERED MODAL) -->
+  <!-- 1. HỘP THOẠI CHỌN MÔN (CENTERED MODAL) -->
   <div class="modal-backdrop" id="modal-picker" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
     <div class="picker-sheet">
       <div class="picker-header">
-        <h3 class="sheet-title-text" id="sheet-title">Chọn môn</h3>
+        <h3 id="sheet-title">Chọn môn</h3>
         <button type="button" class="btn-close-sheet" id="btn-sheet-close" aria-label="Đóng">&times;</button>
       </div>
 
@@ -654,6 +713,18 @@
       <button type="button" class="btn-action btn-sheet-cancel-btn" id="btn-sheet-cancel">
         Đóng
       </button>
+    </div>
+  </div>
+
+  <!-- 2. POPUP XÁC NHẬN THIẾT KẾ ĐẸP MẮT (THAY THẾ CONFIRM CŨ) -->
+  <div class="modal-backdrop" id="modal-confirm" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="confirm-box">
+      <h3 class="confirm-title" id="confirm-title">Xác Nhận</h3>
+      <p class="confirm-msg" id="confirm-msg"></p>
+      <div class="confirm-actions">
+        <button type="button" class="btn-action btn-confirm-cancel" id="btn-confirm-cancel">Hủy</button>
+        <button type="button" class="btn-action btn-confirm-ok" id="btn-confirm-ok">Đồng Ý</button>
+      </div>
     </div>
   </div>
 
@@ -671,7 +742,6 @@
       const CURRENT_REAL_YEAR = NOW.getFullYear();
       const CURRENT_REAL_MONTH = NOW.getMonth() + 1;
 
-      // BỘ PHÂN TÍCH GIỜ THÔNG MINH (CHẤP NHẬN 1230, 715, 12:30, 12.30...)
       function parseTimeString(timeStr) {
         if (!timeStr) return { h: 12, m: 30 };
         let clean = String(timeStr).trim().replace(/[hH.\s]/g, ":");
@@ -741,7 +811,7 @@
         monTuyChon: []
       };
 
-      const STORAGE_KEY = "tkb_final_perfect_app_v5";
+      const STORAGE_KEY = "tkb_final_perfect_app_v6";
 
       let appData = loadData();
       let currentDay = getTodayIndex();
@@ -762,6 +832,8 @@
       const listPeriods = document.getElementById("list-periods");
       const dayNoteHeading = document.getElementById("day-note-heading");
       const txtDayNote = document.getElementById("txt-day-note");
+
+      // MODAL PICKER
       const modalPicker = document.getElementById("modal-picker");
       const sheetTitle = document.getElementById("sheet-title");
       const sheetGrid = document.getElementById("sheet-grid");
@@ -769,6 +841,13 @@
       const btnAddCustomSubject = document.getElementById("btn-add-custom-subject");
       const btnSheetClose = document.getElementById("btn-sheet-close");
       const btnSheetCancel = document.getElementById("btn-sheet-cancel");
+
+      // MODAL CONFIRM NỘI BỘ
+      const modalConfirm = document.getElementById("modal-confirm");
+      const confirmTitle = document.getElementById("confirm-title");
+      const confirmMsg = document.getElementById("confirm-msg");
+      const btnConfirmCancel = document.getElementById("btn-confirm-cancel");
+      const btnConfirmOk = document.getElementById("btn-confirm-ok");
 
       function getSubjectColorClass(name) {
         const clean = (name || "").replace(/\s+/g, ' ').trim().toUpperCase();
@@ -932,9 +1011,9 @@
           delBadge.textContent = "×";
           delBadge.title = "Xoá môn " + customSubName;
 
-          delBadge.addEventListener("click", (e) => {
+          delBadge.addEventListener("click", async (e) => {
             e.stopPropagation();
-            deleteCustomSubject(customSubName);
+            await deleteCustomSubject(customSubName);
           });
 
           wrap.appendChild(btn);
@@ -952,11 +1031,33 @@
         sheetGrid.appendChild(emptyBtn);
       }
 
-      function deleteCustomSubject(subjectToDelete) {
-        const msg = "Bạn có chắc chắn muốn xoá môn \"" + subjectToDelete + "\" không?\n" +
-                    "Tất cả các tiết học có môn \"" + subjectToDelete + "\" ở tất cả các Thứ sẽ bị xoá luôn (chuyển về TRỐNG).";
+      // HÀM HIỂN THỊ POPUP XÁC NHẬN NỘI BỘ THAY THẾ CONFIRM CỦA TRÌNH DUYỆT
+      function showCustomConfirm(title, message, isDanger = false) {
+        return new Promise((resolve) => {
+          confirmTitle.textContent = title;
+          confirmMsg.textContent = message;
+          btnConfirmOk.className = "btn-action " + (isDanger ? "btn-confirm-danger" : "btn-confirm-ok");
+          modalConfirm.classList.add("open");
+          document.body.classList.add("scroll-locked");
+
+          const handleChoice = (ok) => {
+            modalConfirm.classList.remove("open");
+            document.body.classList.remove("scroll-locked");
+            btnConfirmOk.onclick = null;
+            btnConfirmCancel.onclick = null;
+            resolve(ok);
+          };
+
+          btnConfirmOk.onclick = () => handleChoice(true);
+          btnConfirmCancel.onclick = () => handleChoice(false);
+        });
+      }
+
+      async function deleteCustomSubject(subjectToDelete) {
+        const msg = "Bạn có chắc chắn muốn xoá môn \"" + subjectToDelete + "\" không?\n\nKhi xoá môn này, tất cả các tiết học có môn \"" + subjectToDelete + "\" ở tất cả các Thứ sẽ bị xoá luôn (chuyển về TRỐNG).";
         
-        if (confirm(msg)) {
+        const agreed = await showCustomConfirm("Xác Nhận Xoá Môn", msg, true);
+        if (agreed) {
           if (Array.isArray(appData.monTuyChon)) {
             appData.monTuyChon = appData.monTuyChon.filter(item => item !== subjectToDelete);
           }
@@ -1098,12 +1199,16 @@
       });
 
       window.addEventListener("popstate", () => {
+        if (modalConfirm.classList.contains("open")) {
+          modalConfirm.classList.remove("open");
+          document.body.classList.remove("scroll-locked");
+          return;
+        }
         if (modalPicker.classList.contains("open")) {
           closePicker(false);
         }
       });
 
-      // TỰ ĐỘNG CHỐT GIỜ NẾU ĐANG GÕ DỞ MÀ BẤM CHUYỂN THỨ
       daysTabBar.addEventListener("click", (e) => {
         const btn = e.target.closest(".day-tab-btn");
         if (!btn) return;
@@ -1155,7 +1260,6 @@
         silentSave();
       });
 
-      // XỬ LÝ Ô NĂM: TỰ ĐỘNG XOÁ SẴN KHI CHẠM & HỖ TRỢ PHÍM ENTER
       function commitYear() {
         let typed = inpYear.value.trim();
         if (!typed) {
@@ -1186,7 +1290,6 @@
         }
       });
 
-      // XỬ LÝ Ô GIỜ VÀO HỌC: TỰ ĐỘNG XOÁ SẴN KHI CHẠM & HỖ TRỢ PHÍM ENTER
       function commitStartTime() {
         let typed = inpStartTime.value.trim();
         if (!typed) {
@@ -1236,14 +1339,28 @@
       });
 
       window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modalPicker.classList.contains("open")) {
-          closePicker(true);
+        if (e.key === "Escape") {
+          if (modalConfirm.classList.contains("open")) {
+            modalConfirm.classList.remove("open");
+            document.body.classList.remove("scroll-locked");
+            return;
+          }
+          if (modalPicker.classList.contains("open")) {
+            closePicker(true);
+          }
         }
       });
 
-      btnReset.addEventListener("click", () => {
+      // SỬ DỤNG POPUP NỘI BỘ CHO NÚT ĐẶT LẠI
+      btnReset.addEventListener("click", async () => {
         btnReset.disabled = true;
-        if (confirm("Đặt lại toàn bộ thời khoá biểu về mặc định ban đầu?")) {
+        const agreed = await showCustomConfirm(
+          "Đặt Lại Gốc",
+          "Bạn có chắc chắn muốn đặt lại toàn bộ thời khoá biểu về mặc định ban đầu không?\n\nMọi thay đổi môn học và ghi chú của các Thứ sẽ được làm mới.",
+          true
+        );
+
+        if (agreed) {
           const fresh = JSON.parse(JSON.stringify(DEFAULT_DATA));
           fresh.nam = new Date().getFullYear();
           fresh.thang = new Date().getMonth() + 1;
