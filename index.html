@@ -95,6 +95,23 @@
     }
 
     /* ==========================================================================
+       TỐI ƯU MÀN HÌNH LỚN: GIỚI HẠN 36REM (~576PX, ĐÃ GIẢM 25%) CĂN GIỮA NHỎ GỌN
+       ========================================================================== */
+    @media (min-width: 600px) {
+      h1,
+      .author-signature,
+      .top-controls-container,
+      .date-strip,
+      .days-tab-bar,
+      .periods-list,
+      .day-note-box {
+        max-width: 36rem; /* Thu nhỏ thêm 25%, Tiết và Môn cách nhau vừa vặn tuyệt đẹp */
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    /* ==========================================================================
        4. THANH CÔNG CỤ TRÊN CÙNG (BỐ CỤC 2 DÒNG THÔNG THOÁNG)
        ========================================================================== */
     .top-controls-container {
@@ -195,7 +212,6 @@
       display: flex;
     }
 
-    /* DANH SÁCH HỌC SINH NỚI RỘNG RÃI */
     .user-list-scroll {
       max-height: 16rem;
       overflow-y: auto;
@@ -488,7 +504,7 @@
     }
 
     /* ==========================================================================
-       7. DANH SÁCH 5 TIẾT CHIỀU (KHÔI PHỤC ĐẦY ĐỦ TRỌN VẸN)
+       7. DANH SÁCH 5 TIẾT CHIỀU (KHOẢNG CÁCH GỌN GÀNG, VỪA VẶN)
        ========================================================================== */
     .periods-list {
       display: flex;
@@ -578,7 +594,6 @@
       border: 2px solid var(--c-orange);
     }
 
-    /* Nút TRỐNG: Nền xám sáng #CCCCCC, chữ đen #000000 nổi bật */
     .sub-empty {
       background-color: var(--c-gray);
       color: var(--c-black);
@@ -989,13 +1004,12 @@
   <h1>THỜI KHOÁ BIỂU</h1>
   <div class="author-signature">Dương Tấn Chánh</div>
 
-  <!-- THANH CÔNG CỤ: TÁCH 2 DÒNG THÔNG THOÁNG TRÊN MÀN HÌNH NHỎ -->
+  <!-- THANH CÔNG CỤ: TÁCH 2 DÒNG THÔNG THOÁNG -->
   <div class="top-controls-container">
-    <!-- Dòng 1: Nút tên học sinh nằm riêng một hàng trên bên trái -->
+    <!-- Dòng 1: Nút tên học sinh -->
     <div class="top-row-user">
       <div class="user-selector-wrap">
         <button type="button" class="btn-user-select" id="btn-user-toggle" aria-haspopup="true" aria-expanded="false">
-          <!-- Logo học sinh Mẫu 1 (Thanh lịch), nền xanh lá bo góc 15% -->
           <span class="avatar-squircle">
             <svg class="avatar-svg" viewBox="0 0 36 36">
               <circle cx="18" cy="12" r="5" fill="#FFFFFF"/>
@@ -1010,7 +1024,6 @@
         <div class="user-dropdown-menu" id="user-dropdown">
           <div class="user-list-scroll" id="user-list-container"></div>
           <button type="button" class="btn-create-user" id="btn-create-user-trigger">
-            <!-- Logo thêm học sinh: dấu cộng trắng nền xanh lá bo góc 15% -->
             <span class="plus-squircle">
               <svg class="plus-svg" viewBox="0 0 20 20">
                 <path d="M 10 4 L 10 16 M 4 10 L 16 10" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
@@ -1022,7 +1035,7 @@
       </div>
     </div>
 
-    <!-- Dòng 2: Cụm nút Sửa & Dữ Liệu Mẫu căn thẳng hàng sát lề phải -->
+    <!-- Dòng 2: Cụm nút Sửa & Dữ Liệu Mẫu căn sát lề phải -->
     <div class="top-row-actions">
       <button type="button" class="btn-action btn-edit" id="btn-edit-toggle">Sửa</button>
       <button type="button" class="btn-action btn-sample-data" id="btn-reset">Dữ Liệu Mẫu</button>
@@ -1070,7 +1083,7 @@
     <button type="button" class="day-tab-btn" id="tab-btn-7" data-day="7" role="tab" aria-controls="list-periods">Thứ 7</button>
   </div>
 
-  <!-- DANH SÁCH 5 TIẾT CHIỀU (ĐÃ SỬA CHUẨN XÁC KHÔNG CÒN LỖI) -->
+  <!-- DANH SÁCH 5 TIẾT CHIỀU (ĐÃ GIẢM 25% ĐỘ RỘNG MÀN HÌNH LỚN) -->
   <div class="periods-list" id="list-periods"></div>
 
   <!-- GHI CHÚ THEO TỪNG THỨ (CÓ GỢI Ý MỜ THÔNG MINH) -->
@@ -1136,7 +1149,7 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT XỬ LÝ TOÀN BỘ LOGIC HỆ THỐNG ĐÃ SỬA TRIỆT ĐỂ LỖI MẤT MÔN -->
+  <!-- JAVASCRIPT XỬ LÝ TOÀN BỘ LOGIC HỆ THỐNG -->
   <script>
     (function () {
       "use strict";
@@ -1159,7 +1172,7 @@
       const CURRENT_REAL_YEAR = NOW.getFullYear();
       const CURRENT_REAL_MONTH = NOW.getMonth() + 1;
 
-      // HÀM CHUẨN HOÁ HỒ SƠ HỌC SINH (CHỐNG LỖI ĐỊNH DẠNG DỮ LIỆU CŨ)
+      // CHUẨN HOÁ DỮ LIỆU HỒ SƠ HỌC SINH
       function normalizeStudentProfile(std) {
         if (!std || typeof std !== "object") return createDefaultStudentProfile();
         if (typeof std.name !== "string" || !std.name.trim()) std.name = "Học Sinh 1";
@@ -1244,8 +1257,9 @@
         }
       };
 
-      // TỰ ĐỘNG QUÉT TOÀN BỘ CÁC BẢN LƯU CŨ ĐỂ KHÔNG BAO GIỜ MẤT DỮ LIỆU
       const KNOWN_STORAGE_KEYS = [
+        "tkb_multi_user_app_v29_36rem_optimized",
+        "tkb_multi_user_app_v28_desktop_optimized",
         "tkb_multi_user_app_v27_ultimate_fix",
         "tkb_multi_user_app_v26_master_zero_defect",
         "tkb_multi_user_app_v25_absolute_final",
@@ -1268,14 +1282,12 @@
       let targetedStudentForAction = null;
 
       function loadRootData() {
-        // Quét tìm dữ liệu hợp lệ trên máy
         for (let i = 0; i < KNOWN_STORAGE_KEYS.length; i++) {
           try {
             const raw = SafeStorage.getItem(KNOWN_STORAGE_KEYS[i]);
             if (raw) {
               const parsed = JSON.parse(raw);
               if (parsed && typeof parsed === "object" && Array.isArray(parsed.students) && parsed.students.length > 0) {
-                // Chuẩn hoá sạch sẽ từng học sinh
                 parsed.students = parsed.students.map(normalizeStudentProfile);
                 if (!parsed.activeId || !parsed.students.some(s => s.id === parsed.activeId)) {
                   parsed.activeId = parsed.students[0].id;
@@ -1284,7 +1296,7 @@
               }
             }
           } catch (e) {
-            console.warn("Lỗi đọc khoá lưu trữ cũ:", KNOWN_STORAGE_KEYS[i], e);
+            console.warn("Lỗi đọc khoá lưu trữ:", KNOWN_STORAGE_KEYS[i], e);
           }
         }
 
@@ -1456,7 +1468,7 @@
         return "sub-default";
       }
 
-      // TẠO ĐẦY ĐỦ 5 TIẾT HỌC TỪ calculatedSlots
+      // TẠO 5 TIẾT HỌC CHUẨN XÁC TỪ calculatedSlots
       let activeStudent = getActiveStudent();
       let calculatedSlots = calculateTimeSlots(activeStudent.gioVaoHoc || "12:30");
 
@@ -1498,7 +1510,7 @@
 
         card.appendChild(metaBox);
         card.appendChild(badge);
-        listPeriods.appendChild(card); // Đưa thẻ vào màn hình
+        listPeriods.appendChild(card);
 
         return {
           badge,
@@ -1529,7 +1541,7 @@
       }
 
       // ========================================================================
-      // BẢNG CHỌN MÔN (CHO PHÉP XOÁ BẤT KỲ MÔN NÀO)
+      // BẢNG CHỌN MÔN (NÚT TRỐNG NỀN XÁM SÁNG CHỮ ĐEN)
       // ========================================================================
       function buildPickerSheet() {
         sheetGrid.innerHTML = "";
@@ -1563,7 +1575,6 @@
           sheetGrid.appendChild(wrap);
         });
 
-        // Nút TRỐNG: Nền xám sáng chữ đen nổi bật
         const emptyBtn = document.createElement("button");
         emptyBtn.type = "button";
         emptyBtn.className = "btn-subject-item sub-empty";
@@ -1635,7 +1646,6 @@
         closePicker(true);
       }
 
-      // THÊM MÔN: TỰ ĐỘNG XOÁ TRẮNG Ô NHẬP, CHẶN THÊM CHỮ "TRỐNG"
       function handleAddCustomSubject() {
         const val = inpCustomSubject.value.replace(/\s+/g, ' ').trim().toUpperCase();
         if (!val || val === "TRỐNG") {
@@ -1690,7 +1700,7 @@
       }
 
       // ========================================================================
-      // QUẢN LÝ MENU HỌC SINH (CHẠM TOÀN BỘ HÀNG ĐỂ ĐỔI NGƯỜI DÙNG)
+      // QUẢN LÝ MENU HỌC SINH (CHẠM CẢ HÀNG ĐỂ ĐỔI NGƯỜI DÙNG)
       // ========================================================================
       function renderUserDropdownList() {
         userListContainer.innerHTML = "";
@@ -1709,13 +1719,11 @@
             title.prepend(check);
           }
 
-          // Chạm toàn bộ hàng để đổi học sinh ngay lập tức
           row.addEventListener("click", () => {
             closeUserDropdown();
             switchActiveStudent(std.id, false);
           });
 
-          // Nút bánh răng mở menu cấu hình
           const gear = document.createElement("button");
           gear.type = "button";
           gear.className = "btn-user-gear";
@@ -1916,7 +1924,6 @@
         closeNamePromptDialog();
 
         if (promptMode === "create") {
-          // TẠO MỚI: TẤT CẢ CÁC TIẾT ĐỂ TRỐNG (isBlank = true) VÀ TỰ ĐỘNG BẬT SẴN CHẾ ĐỘ SỬA
           const newStudent = createDefaultStudentProfile("std_" + Date.now(), typed, true);
           rootData.students.push(newStudent);
           switchActiveStudent(newStudent.id, true);
@@ -2018,7 +2025,7 @@
 
         updateCalculatedScheduleTimes(std.gioVaoHoc || "12:30");
 
-        // CẬP NHẬT 5 TIẾT HỌC AN TOÀN TUYỆT ĐỐI
+        // CẬP NHẬT 5 TIẾT HỌC AN TOÀN
         const dayList = (std.monHoc && std.monHoc[String(currentDay)]) || [];
         for (let i = 0; i < 5; i++) {
           if (periodCards[i]) {
@@ -2115,7 +2122,6 @@
       valYear.addEventListener("paste", (e) => sanitizePasteNumeric(e, false));
       valStartTime.addEventListener("paste", (e) => sanitizePasteNumeric(e, true));
 
-      // TỰ ĐỘNG HIỂU NĂM 2 CHỮ SỐ (GÕ 24 -> 2024, GÕ 25 -> 2025)
       function commitYear() {
         const std = getActiveStudent();
         let typed = valYear.textContent.replace(/\D/g, "").trim();
@@ -2182,7 +2188,6 @@
       btnSheetClose.addEventListener("click", () => closePicker(true));
       btnSheetCancel.addEventListener("click", () => closePicker(true));
 
-      // ĐỒNG BỘ CLICK-OUTSIDE ĐÓNG CẢ 4 MODAL
       modalPicker.addEventListener("click", (e) => {
         if (e.target === modalPicker) closePicker(true);
       });
@@ -2211,7 +2216,6 @@
         }
       });
 
-      // NÚT "DỮ LIỆU MẪU": NẠP THỜI KHOÁ BIỂU MẪU VÍ DỤ, GIỮ NGUYÊN TÊN HỌC SINH
       btnReset.addEventListener("click", async () => {
         btnReset.disabled = true;
         const std = getActiveStudent();
@@ -2288,7 +2292,7 @@
       });
       window.addEventListener("beforeunload", flushSaveNote);
 
-      // KHỞI CHẠY ỨNG DỤNG
+      // KHỞI CHẠY HỆ THỐNG
       buildPickerSheet();
       render();
     })();
