@@ -64,20 +64,6 @@
 
 ---
 
-## 🌐 HƯỚNG DẪN TẢI LÊN MẠNG (GITHUB) ĐỂ DÙNG TRỰC TUYẾN MIỄN PHÍ
-
-Bạn có thể đưa ứng dụng này lên mạng Internet để mở trên điện thoại mọi lúc mọi nơi theo 4 bước sau:
-
-1. **Chuẩn bị file:** Đổi tên file chứa mã nguồn của bạn thành: **`index.html`**.
-2. **Tạo trang lưu trữ:** Đăng nhập vào [GitHub](https://github.com/) $\rightarrow$ Bấm dấu **`+`** góc trên chọn **New repository** $\rightarrow$ Đặt tên (ví dụ: `thoikhoabieu`) $\rightarrow$ Bấm **Create repository**.
-3. **Tải file lên:** Bấm vào dòng chữ **"uploading an existing file"** $\rightarrow$ Kéo thả 2 file `index.html` và `README.md` vào trang web $\rightarrow$ Bấm nút xanh **Commit changes**.
-4. **Bật trang web hoạt động:** 
-   - Vào mục **Settings** (ở thanh menu trên) $\rightarrow$ Chọn **Pages** (ở cột bên trái).
-   - Tại mục **Branch**, chọn nhánh **`main`** $\rightarrow$ Bấm nút **Save**.
-   - Chờ khoảng 1 - 2 phút, GitHub sẽ cung cấp cho bạn một đường link web miễn phí vĩnh viễn. Bạn có thể lưu link này ra màn hình chính điện thoại để dùng hệt như một ứng dụng cài đặt sẵn!
-
----
-
 ## 👤 TÁC GIẢ
 * **Tác giả ứng dụng:** Dương Tấn Chánh
 * Chúc bạn và các em học sinh có một thời khoá biểu thật khoa học, tiện lợi và học tập thật tốt!
