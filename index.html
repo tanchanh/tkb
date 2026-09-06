@@ -95,7 +95,7 @@
     }
 
     /* ==========================================================================
-       TỐI ƯU MÀN HÌNH LỚN: GIỚI HẠN 36REM (~576PX, ĐÃ GIẢM 25%) CĂN GIỮA NHỎ GỌN
+       TỐI ƯU MÀN HÌNH LỚN: GIỚI HẠN 36REM (~576PX) CĂN GIỮA NHỎ GỌN
        ========================================================================== */
     @media (min-width: 600px) {
       h1,
@@ -105,7 +105,7 @@
       .days-tab-bar,
       .periods-list,
       .day-note-box {
-        max-width: 36rem; /* Thu nhỏ thêm 25%, Tiết và Môn cách nhau vừa vặn tuyệt đẹp */
+        max-width: 36rem;
         margin-left: auto;
         margin-right: auto;
       }
@@ -177,11 +177,13 @@
       display: block;
     }
 
+    /* Tên học sinh: Cách logo thêm đúng 1 ký tự space (0.35rem) và cách mũi tên 0.5rem */
     .btn-user-name-text {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      margin-right: 0.5rem;
+      margin-left: 0.35rem; /* Khoảng thở 1 dấu space với logo */
+      margin-right: 0.5rem;  /* Khoảng cách thoáng đãng với tam giác ▼ */
     }
 
     .user-dropdown-arrow {
@@ -212,6 +214,7 @@
       display: flex;
     }
 
+    /* DANH SÁCH HỌC SINH NỚI RỘNG RÃI */
     .user-list-scroll {
       max-height: 16rem;
       overflow-y: auto;
@@ -314,6 +317,7 @@
       display: block;
     }
 
+    /* Dòng 2: Nút thao tác Sửa & Dữ Liệu Mẫu */
     .top-row-actions {
       display: flex;
       align-items: center;
@@ -355,10 +359,17 @@
       color: var(--c-white);
     }
 
+    /* Ở chế độ Xem: Ẩn hoàn toàn nút Dữ Liệu Mẫu, chỉ chừa duy nhất nút Sửa */
     .btn-action.btn-sample-data {
+      display: none;
       background-color: var(--c-dark-1);
       border: 2px solid var(--c-blue);
       color: var(--c-white);
+    }
+
+    /* Khi ở chế độ Sửa (edit-mode-active): Hiện nút Dữ Liệu Mẫu bên trái nút Xong */
+    .edit-mode-active .btn-action.btn-sample-data {
+      display: inline-flex;
     }
 
     /* ==========================================================================
@@ -1035,10 +1046,10 @@
       </div>
     </div>
 
-    <!-- Dòng 2: Cụm nút Sửa & Dữ Liệu Mẫu căn sát lề phải -->
+    <!-- Dòng 2: Cụm nút thao tác (Chỉ hiện "Sửa" khi xem; Hiện "Dữ Liệu Mẫu" + "Xong" khi sửa) -->
     <div class="top-row-actions">
-      <button type="button" class="btn-action btn-edit" id="btn-edit-toggle">Sửa</button>
       <button type="button" class="btn-action btn-sample-data" id="btn-reset">Dữ Liệu Mẫu</button>
+      <button type="button" class="btn-action btn-edit" id="btn-edit-toggle">Sửa</button>
     </div>
   </div>
 
@@ -1100,7 +1111,6 @@
         <button type="button" class="btn-close-sheet" id="btn-sheet-close" aria-label="Đóng">&times;</button>
       </div>
 
-      <!-- Ô nhập "Thêm môn học" và nút "Thêm" ngắn gọn, dứt khoát -->
       <div class="custom-subject-bar">
         <input type="text" id="inp-custom-subject" class="custom-subject-input" placeholder="Thêm môn học" maxlength="15">
         <button type="button" id="btn-add-custom-subject" class="btn-action btn-add-sub">Thêm</button>
@@ -1258,6 +1268,8 @@
       };
 
       const KNOWN_STORAGE_KEYS = [
+        "tkb_multi_user_app_v31_spacing_perfect",
+        "tkb_multi_user_app_v30_edit_only_sample",
         "tkb_multi_user_app_v29_36rem_optimized",
         "tkb_multi_user_app_v28_desktop_optimized",
         "tkb_multi_user_app_v27_ultimate_fix",
@@ -1468,7 +1480,7 @@
         return "sub-default";
       }
 
-      // TẠO 5 TIẾT HỌC CHUẨN XÁC TỪ calculatedSlots
+      // TẠO 5 TIẾT HỌC CHUẨN XÁC
       let activeStudent = getActiveStudent();
       let calculatedSlots = calculateTimeSlots(activeStudent.gioVaoHoc || "12:30");
 
@@ -1924,6 +1936,7 @@
         closeNamePromptDialog();
 
         if (promptMode === "create") {
+          // TẠO MỚI: TẤT CẢ CÁC TIẾT ĐỂ TRỐNG (isBlank = true) VÀ TỰ ĐỘNG BẬT SẴN CHẾ ĐỘ SỬA
           const newStudent = createDefaultStudentProfile("std_" + Date.now(), typed, true);
           rootData.students.push(newStudent);
           switchActiveStudent(newStudent.id, true);
@@ -2122,6 +2135,7 @@
       valYear.addEventListener("paste", (e) => sanitizePasteNumeric(e, false));
       valStartTime.addEventListener("paste", (e) => sanitizePasteNumeric(e, true));
 
+      // TỰ ĐỘNG HIỂU NĂM 2 CHỮ SỐ (GÕ 24 -> 2024, GÕ 25 -> 2025)
       function commitYear() {
         const std = getActiveStudent();
         let typed = valYear.textContent.replace(/\D/g, "").trim();
@@ -2188,6 +2202,7 @@
       btnSheetClose.addEventListener("click", () => closePicker(true));
       btnSheetCancel.addEventListener("click", () => closePicker(true));
 
+      // ĐỒNG BỘ CLICK-OUTSIDE ĐÓNG CẢ 4 MODAL
       modalPicker.addEventListener("click", (e) => {
         if (e.target === modalPicker) closePicker(true);
       });
@@ -2216,6 +2231,7 @@
         }
       });
 
+      // NÚT "DỮ LIỆU MẪU": NẠP THỜI KHOÁ BIỂU MẪU VÍ DỤ, GIỮ NGUYÊN TÊN HỌC SINH
       btnReset.addEventListener("click", async () => {
         btnReset.disabled = true;
         const std = getActiveStudent();
@@ -2292,7 +2308,7 @@
       });
       window.addEventListener("beforeunload", flushSaveNote);
 
-      // KHỞI CHẠY HỆ THỐNG
+      // KHỞI CHẠY ỨNG DỤNG
       buildPickerSheet();
       render();
     })();
