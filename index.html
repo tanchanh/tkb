@@ -177,13 +177,13 @@
       display: block;
     }
 
-    /* Tên học sinh: Cách logo thêm đúng 1 ký tự space (0.35rem) và cách mũi tên 0.5rem */
+    /* Tên học sinh: Cách logo đúng 1 khoảng trắng (0.35rem) và cách mũi tên 0.5rem */
     .btn-user-name-text {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      margin-left: 0.35rem; /* Khoảng thở 1 dấu space với logo */
-      margin-right: 0.5rem;  /* Khoảng cách thoáng đãng với tam giác ▼ */
+      margin-left: 0.35rem;
+      margin-right: 0.5rem;
     }
 
     .user-dropdown-arrow {
@@ -359,7 +359,7 @@
       color: var(--c-white);
     }
 
-    /* Ở chế độ Xem: Ẩn hoàn toàn nút Dữ Liệu Mẫu, chỉ chừa duy nhất nút Sửa */
+    /* Ở chế độ Xem: Ẩn nút Dữ Liệu Mẫu */
     .btn-action.btn-sample-data {
       display: none;
       background-color: var(--c-dark-1);
@@ -515,7 +515,7 @@
     }
 
     /* ==========================================================================
-       7. DANH SÁCH 5 TIẾT CHIỀU (KHOẢNG CÁCH GỌN GÀNG, VỪA VẶN)
+       7. DANH SÁCH 5 TIẾT CHIỀU (CHỮ "TIẾT..." ĐỔI MÀU XANH LÁ SÁNG KHI ĐANG HỌC)
        ========================================================================== */
     .periods-list {
       display: flex;
@@ -533,6 +533,14 @@
       background-color: var(--c-dark-1);
       border-left: 6px solid var(--c-blue);
       border-radius: 0.5rem;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    /* TIẾT ĐANG HỌC: PHỦ NỀN XANH LỤC DỊU, VIỀN XANH LÁ PHÁT SÁNG */
+    .period-card.period-active {
+      background-color: rgba(0, 153, 17, 0.18);
+      border-color: var(--c-green);
+      border-left: 6px solid var(--c-lime);
     }
 
     .period-meta {
@@ -545,6 +553,12 @@
       font-weight: bold;
       font-size: 1.2rem;
       color: var(--c-white);
+      transition: color 0.2s ease;
+    }
+
+    /* KHI ĐANG HỌC: CHỮ "TIẾT..." ĐỔI HẲN SANG MÀU XANH LÁ SÁNG RỰC RỠ */
+    .period-card.period-active .p-name {
+      color: var(--c-lime);
     }
 
     .p-time {
@@ -552,6 +566,11 @@
       color: var(--c-gray);
       font-weight: normal;
       white-space: nowrap;
+    }
+
+    .period-card.period-active .p-time {
+      color: var(--c-white);
+      font-weight: bold;
     }
 
     .subject-badge {
@@ -1094,7 +1113,7 @@
     <button type="button" class="day-tab-btn" id="tab-btn-7" data-day="7" role="tab" aria-controls="list-periods">Thứ 7</button>
   </div>
 
-  <!-- DANH SÁCH 5 TIẾT CHIỀU (ĐÃ GIẢM 25% ĐỘ RỘNG MÀN HÌNH LỚN) -->
+  <!-- DANH SÁCH 5 TIẾT CHIỀU (CHỮ "TIẾT..." ĐỔI MÀU XANH LÁ RỰC RỠ KHI ĐANG HỌC) -->
   <div class="periods-list" id="list-periods"></div>
 
   <!-- GHI CHÚ THEO TỪNG THỨ (CÓ GỢI Ý MỜ THÔNG MINH) -->
@@ -1183,7 +1202,7 @@
       const CURRENT_REAL_YEAR = NOW.getFullYear();
       const CURRENT_REAL_MONTH = NOW.getMonth() + 1;
 
-      // CHUẨN HOÁ DỮ LIỆU HỒ SƠ HỌC SINH
+      // CHUẨN HOÁ DỮ LIỆU HỒ SƠ HỌC SINH (CHỐNG LỖI ĐỊNH DẠNG DỮ LIỆU CŨ)
       function normalizeStudentProfile(std) {
         if (!std || typeof std !== "object") return createDefaultStudentProfile();
         if (typeof std.name !== "string" || !std.name.trim()) std.name = "Học Sinh 1";
@@ -1269,6 +1288,8 @@
       };
 
       const KNOWN_STORAGE_KEYS = [
+        "tkb_multi_user_app_v34_lime_name_active",
+        "tkb_multi_user_app_v33_live_period_active",
         "tkb_multi_user_app_v32_reset_edit_auto",
         "tkb_multi_user_app_v31_spacing_perfect",
         "tkb_multi_user_app_v30_edit_only_sample",
@@ -1388,7 +1409,9 @@
           let pEnd = pStart + 45;
           slots.push({
             label: "Tiết " + (i + 1),
-            gio: formatMinutesToTime(pStart) + " - " + formatMinutesToTime(pEnd)
+            gio: formatMinutesToTime(pStart) + " - " + formatMinutesToTime(pEnd),
+            startMin: pStart,
+            endMin: pEnd
           });
           if (i < 4) {
             currentMin = pEnd + breaks[i];
@@ -1482,7 +1505,7 @@
         return "sub-default";
       }
 
-      // TẠO 5 TIẾT HỌC CHUẨN XÁC
+      // TẠO 5 TIẾT HỌC THẲNG HÀNG TĂM TẮP, KHÔNG CÓ DẤU CHẤM LỆCH CHỮ
       let activeStudent = getActiveStudent();
       let calculatedSlots = calculateTimeSlots(activeStudent.gioVaoHoc || "12:30");
 
@@ -1527,6 +1550,7 @@
         listPeriods.appendChild(card);
 
         return {
+          card,
           badge,
           update(subjectName) {
             let nameStr = "TRỐNG";
@@ -1551,6 +1575,23 @@
           if (periodCards[i]) {
             periodCards[i].updateTime(calculatedSlots[i].gio);
           }
+        }
+      }
+
+      // TỰ ĐỘNG PHÁT SÁNG DÒNG CHỮ "TIẾT..." SANG MÀU XANH LÁ MẠ RỰC RỠ
+      function updateLiveActivePeriod() {
+        const now = new Date();
+        const realDay = now.getDay();
+        const todayIndex = (realDay >= 1 && realDay <= 6) ? (realDay + 1) : 2;
+        const isViewingToday = (currentDay === todayIndex && realDay !== 0);
+
+        const currentTotalMins = now.getHours() * 60 + now.getMinutes();
+
+        for (let i = 0; i < 5; i++) {
+          if (!periodCards[i]) continue;
+          const slot = calculatedSlots[i];
+          const isActive = isViewingToday && slot && (currentTotalMins >= slot.startMin && currentTotalMins < slot.endMin);
+          periodCards[i].card.classList.toggle("period-active", isActive);
         }
       }
 
@@ -1829,7 +1870,7 @@
         }
       });
 
-      // XOÁ HỌC SINH: HỌC SINH CUỐI SẼ TRẢ VỀ TRẮNG VÀ TỰ ĐỘNG BẬT CHẾ ĐỘ SỬA
+      // XOÁ HỌC SINH: HỌC SINH CUỐI SẼ TẨY TRẮNG VÀ TỰ ĐỘNG BẬT CHẾ ĐỘ SỬA
       btnActDelete.addEventListener("click", async () => {
         const std = targetedStudentForAction;
         modalStudentActions.classList.remove("open");
@@ -1843,11 +1884,10 @@
         const agreed = await showCustomConfirm("Xác Nhận Xoá Học Sinh", confirmMsgText, true);
         if (agreed) {
           if (isOnlyOne) {
-            // Tẩy trắng sạch sẽ (isBlank = true) và tự động bật chế độ Sửa!
             const fresh = createDefaultStudentProfile(std.id, "Học Sinh 1", true);
             rootData.students = [fresh];
             rootData.activeId = fresh.id;
-            isEditMode = true; // Tự động mở chế độ Sửa để nhập luôn!
+            isEditMode = true;
           } else {
             rootData.students = rootData.students.filter(s => s.id !== std.id);
             if (rootData.activeId === std.id) {
@@ -1940,7 +1980,6 @@
         closeNamePromptDialog();
 
         if (promptMode === "create") {
-          // TẠO MỚI: TẤT CẢ CÁC TIẾT ĐỂ TRỐNG (isBlank = true) VÀ TỰ ĐỘNG BẬT SẴN CHẾ ĐỘ SỬA
           const newStudent = createDefaultStudentProfile("std_" + Date.now(), typed, true);
           rootData.students.push(newStudent);
           switchActiveStudent(newStudent.id, true);
@@ -2042,13 +2081,16 @@
 
         updateCalculatedScheduleTimes(std.gioVaoHoc || "12:30");
 
-        // CẬP NHẬT 5 TIẾT HỌC AN TOÀN
+        // CẬP NHẬT 5 TIẾT HỌC
         const dayList = (std.monHoc && std.monHoc[String(currentDay)]) || [];
         for (let i = 0; i < 5; i++) {
           if (periodCards[i]) {
             periodCards[i].update(dayList[i] || "TRỐNG");
           }
         }
+
+        // TỰ ĐỘNG PHÁT SÁNG CHỮ "TIẾT..." KHI ĐẾN GIỜ HỌC
+        updateLiveActivePeriod();
 
         txtDayNote.value = (std.ghiChuTheoThu && std.ghiChuTheoThu[String(currentDay)]) || "";
       }
@@ -2308,9 +2350,14 @@
       window.addEventListener("visibilitychange", () => {
         if (document.visibilityState === "hidden") {
           flushSaveNote();
+        } else {
+          updateLiveActivePeriod();
         }
       });
       window.addEventListener("beforeunload", flushSaveNote);
+
+      // TỰ ĐỘNG CẬP NHẬT TIẾT ĐANG HỌC MỖI 30 GIÂY
+      setInterval(updateLiveActivePeriod, 30000);
 
       // KHỞI CHẠY HỆ THỐNG
       buildPickerSheet();
