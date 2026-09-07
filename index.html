@@ -1111,6 +1111,7 @@
         <button type="button" class="btn-close-sheet" id="btn-sheet-close" aria-label="Đóng">&times;</button>
       </div>
 
+      <!-- Ô nhập "Thêm môn học" và nút "Thêm" ngắn gọn, dứt khoát -->
       <div class="custom-subject-bar">
         <input type="text" id="inp-custom-subject" class="custom-subject-input" placeholder="Thêm môn học" maxlength="15">
         <button type="button" id="btn-add-custom-subject" class="btn-action btn-add-sub">Thêm</button>
@@ -1268,6 +1269,7 @@
       };
 
       const KNOWN_STORAGE_KEYS = [
+        "tkb_multi_user_app_v32_reset_edit_auto",
         "tkb_multi_user_app_v31_spacing_perfect",
         "tkb_multi_user_app_v30_edit_only_sample",
         "tkb_multi_user_app_v29_36rem_optimized",
@@ -1827,6 +1829,7 @@
         }
       });
 
+      // XOÁ HỌC SINH: HỌC SINH CUỐI SẼ TRẢ VỀ TRẮNG VÀ TỰ ĐỘNG BẬT CHẾ ĐỘ SỬA
       btnActDelete.addEventListener("click", async () => {
         const std = targetedStudentForAction;
         modalStudentActions.classList.remove("open");
@@ -1834,23 +1837,24 @@
 
         const isOnlyOne = (rootData.students.length <= 1);
         const confirmMsgText = isOnlyOne
-          ? "Bạn có chắc chắn muốn xoá học sinh \"" + std.name + "\" không?\n\nVì đây là học sinh cuối cùng, hệ thống sẽ xoá dữ liệu và đặt lại tên thành \"Học Sinh 1\" mặc định."
+          ? "Bạn có chắc chắn muốn xoá học sinh \"" + std.name + "\" không?\n\nVì đây là học sinh cuối cùng, hệ thống sẽ tẩy trắng toàn bộ thời khoá biểu, đặt lại tên thành \"Học Sinh 1\" và tự động bật chế độ Sửa để bạn nhập dữ liệu mới."
           : "Bạn có chắc chắn muốn xoá học sinh \"" + std.name + "\" không?\n\nToàn bộ thời khoá biểu của học sinh này sẽ bị xoá vĩnh viễn.";
 
         const agreed = await showCustomConfirm("Xác Nhận Xoá Học Sinh", confirmMsgText, true);
         if (agreed) {
           if (isOnlyOne) {
-            const fresh = createDefaultStudentProfile(std.id, "Học Sinh 1", false);
+            // Tẩy trắng sạch sẽ (isBlank = true) và tự động bật chế độ Sửa!
+            const fresh = createDefaultStudentProfile(std.id, "Học Sinh 1", true);
             rootData.students = [fresh];
             rootData.activeId = fresh.id;
+            isEditMode = true; // Tự động mở chế độ Sửa để nhập luôn!
           } else {
             rootData.students = rootData.students.filter(s => s.id !== std.id);
             if (rootData.activeId === std.id) {
               rootData.activeId = rootData.students[0].id;
             }
+            isEditMode = false;
           }
-
-          isEditMode = false;
 
           silentSave();
           buildPickerSheet();
@@ -2308,7 +2312,7 @@
       });
       window.addEventListener("beforeunload", flushSaveNote);
 
-      // KHỞI CHẠY ỨNG DỤNG
+      // KHỞI CHẠY HỆ THỐNG
       buildPickerSheet();
       render();
     })();
