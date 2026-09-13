@@ -515,7 +515,7 @@
     }
 
     /* ==========================================================================
-       7. DANH SÁCH 5 TIẾT CHIỀU (CHỮ "TIẾT..." ĐỔI MÀU XANH LÁ SÁNG KHI ĐANG HỌC)
+       7. DANH SÁCH 5 TIẾT CHIỀU (BỐ CỤC 2 TẦNG: TIẾT Ở TRÊN, GIỜ Ở DƯỚI)
        ========================================================================== */
     .periods-list {
       display: flex;
@@ -528,11 +528,12 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.55rem 0.7rem;
+      padding: 0.55rem 0.75rem;
       border: 2px solid var(--c-dark-2);
       background-color: var(--c-dark-1);
       border-left: 6px solid var(--c-blue);
       border-radius: 0.5rem;
+      min-height: 4.0rem;
       transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
@@ -543,29 +544,39 @@
       border-left: 6px solid var(--c-lime);
     }
 
+    /* Cột bên trái: Xếp dọc 2 dòng tự nhiên (flex-direction: column) */
     .period-meta {
       display: flex;
-      align-items: baseline;
-      gap: 0.6rem;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0.15rem;
+      flex: 1 1 auto;
+      min-width: 0;
     }
 
+    /* Dòng trên: Tên tiết (khóa chống ngắt dòng tuyệt đối) */
     .p-name {
       font-weight: bold;
       font-size: 1.2rem;
       color: var(--c-white);
+      white-space: nowrap;
+      line-height: 1.25;
       transition: color 0.2s ease;
     }
 
-    /* KHI ĐANG HỌC: CHỮ "TIẾT..." ĐỔI HẲN SANG MÀU XANH LÁ SÁNG RỰC RỠ */
+    /* Tiết đang học: Tên tiết phát sáng màu xanh lá mạ rực rỡ */
     .period-card.period-active .p-name {
       color: var(--c-lime);
     }
 
+    /* Dòng dưới: Giờ học ngay ngắn */
     .p-time {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--c-gray);
       font-weight: normal;
       white-space: nowrap;
+      line-height: 1.25;
     }
 
     .period-card.period-active .p-time {
@@ -573,13 +584,14 @@
       font-weight: bold;
     }
 
+    /* Nút môn học bên phải */
     .subject-badge {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       min-width: 6.2rem;
       max-width: 9.5rem;
-      padding: 0.4rem 0.6rem;
+      padding: 0.45rem 0.6rem;
       font-size: 1.2rem;
       font-weight: bold;
       border-radius: 0.4rem;
@@ -588,6 +600,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      flex-shrink: 0;
       touch-action: manipulation;
       transition: transform 0.08s ease;
       will-change: transform;
@@ -1113,7 +1126,7 @@
     <button type="button" class="day-tab-btn" id="tab-btn-7" data-day="7" role="tab" aria-controls="list-periods">Thứ 7</button>
   </div>
 
-  <!-- DANH SÁCH 5 TIẾT CHIỀU (CHỮ "TIẾT..." ĐỔI MÀU XANH LÁ RỰC RỠ KHI ĐANG HỌC) -->
+  <!-- DANH SÁCH 5 TIẾT CHIỀU (BỐ CỤC 2 TẦNG: TIẾT Ở TRÊN, GIỜ Ở DƯỚI) -->
   <div class="periods-list" id="list-periods"></div>
 
   <!-- GHI CHÚ THEO TỪNG THỨ (CÓ GỢI Ý MỜ THÔNG MINH) -->
@@ -1288,6 +1301,7 @@
       };
 
       const KNOWN_STORAGE_KEYS = [
+        "tkb_multi_user_app_v35_tier2_perfect",
         "tkb_multi_user_app_v34_lime_name_active",
         "tkb_multi_user_app_v33_live_period_active",
         "tkb_multi_user_app_v32_reset_edit_auto",
@@ -1505,7 +1519,7 @@
         return "sub-default";
       }
 
-      // TẠO 5 TIẾT HỌC THẲNG HÀNG TĂM TẮP, KHÔNG CÓ DẤU CHẤM LỆCH CHỮ
+      // TẠO 5 TIẾT HỌC BỐ CỤC 2 TẦNG (TIẾT TRÊN, GIỜ DƯỚI)
       let activeStudent = getActiveStudent();
       let calculatedSlots = calculateTimeSlots(activeStudent.gioVaoHoc || "12:30");
 
@@ -1514,15 +1528,15 @@
         card.className = "period-card";
 
         const metaBox = document.createElement("div");
-        metaBox.className = "period-meta";
+        metaBox.className = "period-meta"; // Xếp dọc 2 dòng
 
         const pName = document.createElement("span");
         pName.className = "p-name";
-        pName.textContent = slot.label;
+        pName.textContent = slot.label; // "Tiết X" nguyên vẹn ở dòng trên
 
         const pTime = document.createElement("span");
         pTime.className = "p-time";
-        pTime.textContent = slot.gio;
+        pTime.textContent = slot.gio; // Giờ học ngay ngắn ở dòng dưới
 
         metaBox.appendChild(pName);
         metaBox.appendChild(pTime);
@@ -1578,7 +1592,7 @@
         }
       }
 
-      // TỰ ĐỘNG PHÁT SÁNG DÒNG CHỮ "TIẾT..." SANG MÀU XANH LÁ MẠ RỰC RỠ
+      // TỰ ĐỘNG PHÁT SÁNG CHỮ "TIẾT..." SANG MÀU XANH LÁ MẠ RỰC RỠ
       function updateLiveActivePeriod() {
         const now = new Date();
         const realDay = now.getDay();
@@ -1980,6 +1994,7 @@
         closeNamePromptDialog();
 
         if (promptMode === "create") {
+          // TẠO MỚI: TẤT CẢ CÁC TIẾT ĐỂ TRỐNG (isBlank = true) VÀ TỰ ĐỘNG BẬT SẴN CHẾ ĐỘ SỬA
           const newStudent = createDefaultStudentProfile("std_" + Date.now(), typed, true);
           rootData.students.push(newStudent);
           switchActiveStudent(newStudent.id, true);
@@ -2081,7 +2096,7 @@
 
         updateCalculatedScheduleTimes(std.gioVaoHoc || "12:30");
 
-        // CẬP NHẬT 5 TIẾT HỌC
+        // CẬP NHẬT 5 TIẾT HỌC BỐ CỤC 2 TẦNG
         const dayList = (std.monHoc && std.monHoc[String(currentDay)]) || [];
         for (let i = 0; i < 5; i++) {
           if (periodCards[i]) {
