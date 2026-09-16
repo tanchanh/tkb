@@ -373,14 +373,14 @@
     }
 
     /* ==========================================================================
-       5. BỘ CHỌN THỜI GIAN: CHỮ TỰ NHIÊN ÔM SÁT 100%, 2 KHOẢNG TRẮNG
+       5. BỘ CHỌN THỜI GIAN: NGÀY HỆ THỐNG TỰ ĐỘNG, ÔM SÁT NHAU VÀ CĂN GIỮA
        ========================================================================== */
     .date-strip {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 0.25rem 0.8rem;
+      gap: 0.35rem 0.65rem;
       padding: 0.55rem 0.7rem;
       background-color: var(--c-dark-1);
       border: 2px solid var(--c-dark-2);
@@ -388,10 +388,17 @@
       margin-bottom: 0.5rem;
     }
 
+    .date-live-text {
+      font-weight: bold;
+      color: var(--c-lime);
+      font-size: 1.2rem;
+      white-space: nowrap;
+    }
+
     .date-unit {
       display: inline-flex;
       align-items: center;
-      gap: 0.15rem;
+      gap: 0.25rem;
     }
 
     .date-label {
@@ -399,15 +406,6 @@
       color: var(--c-lime);
       font-size: 1.2rem;
       user-select: none;
-      margin-right: 0.35rem;
-    }
-
-    .date-slash {
-      font-weight: bold;
-      color: var(--c-lime);
-      margin: 0 0.05rem;
-      user-select: none;
-      font-size: 1.2rem;
     }
 
     .date-bullet {
@@ -447,30 +445,6 @@
       border: 2px solid var(--c-blue);
       background-color: var(--c-black);
       outline: none;
-    }
-
-    .date-edit-select {
-      display: none;
-      font-family: inherit;
-      font-size: 1.2rem;
-      font-weight: bold;
-      padding: 0.15rem 0.35rem;
-      border: 2px solid var(--c-blue);
-      background-color: var(--c-black);
-      color: var(--c-white);
-      border-radius: 0.35rem;
-      width: auto;
-      text-align: center;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    .edit-mode-active .date-edit-select {
-      display: inline-block;
-    }
-
-    .edit-mode-active #view-month {
-      display: none;
     }
 
     /* ==========================================================================
@@ -515,7 +489,7 @@
     }
 
     /* ==========================================================================
-       7. DANH SÁCH 5 TIẾT CHIỀU (BỐ CỤC 2 TẦNG: TIẾT Ở TRÊN, GIỜ Ở DƯỚI)
+       7. DANH SÁCH TIẾT HỌC (NỀN DÂNG TIẾN TRÌNH THEO THỜI GIAN THỰC)
        ========================================================================== */
     .periods-list {
       display: flex;
@@ -525,6 +499,8 @@
     }
 
     .period-card {
+      position: relative;
+      overflow: hidden; /* Cắt lớp nền tiến độ theo góc bo tròn */
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -537,15 +513,28 @@
       transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
-    /* TIẾT ĐANG HỌC: PHỦ NỀN XANH LỤC DỊU, VIỀN XANH LÁ PHÁT SÁNG */
+    /* LỚP NỀN DÂNG NGANG THEO TIẾN ĐỘ THỜI GIAN THỰC (Z-INDEX: 0) */
+    .period-progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 0%;
+      background-color: rgba(0, 153, 17, 0.28);
+      pointer-events: none;
+      z-index: 0;
+      transition: width 0.8s ease;
+    }
+
     .period-card.period-active {
-      background-color: rgba(0, 153, 17, 0.18);
       border-color: var(--c-green);
       border-left: 6px solid var(--c-lime);
     }
 
-    /* Cột bên trái: Xếp dọc 2 dòng tự nhiên (flex-direction: column) */
+    /* Cột bên trái: Xếp dọc 2 dòng tự nhiên (Z-INDEX: 1 nổi trên nền dâng) */
     .period-meta {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -572,7 +561,7 @@
 
     /* Dòng dưới: Giờ học ngay ngắn */
     .p-time {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       color: var(--c-gray);
       font-weight: normal;
       white-space: nowrap;
@@ -584,8 +573,10 @@
       font-weight: bold;
     }
 
-    /* Nút môn học bên phải */
+    /* Nút môn học bên phải (Z-INDEX: 1) */
     .subject-badge {
+      position: relative;
+      z-index: 1;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -614,6 +605,95 @@
 
     .edit-mode-active .subject-badge:active {
       transform: scale(0.95);
+    }
+
+    /* ==========================================================================
+       THẺ "GIẢI LAO" ĐỒNG BỘ 100% CẤU TRÚC 2 TẦNG + NỀN DÂNG TIẾN ĐỘ
+       ========================================================================== */
+    .break-mini-card {
+      position: relative;
+      overflow: hidden;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.55rem 0.75rem;
+      border: 2px solid var(--c-orange);
+      background-color: var(--c-dark-1);
+      border-left: 6px solid var(--c-orange);
+      border-radius: 0.5rem;
+      min-height: 4.0rem;
+      margin: -0.1rem 0;
+      transition: background-color 0.2s ease;
+    }
+
+    /* KHI ĐẾN GIỜ RA CHƠI: HIỆN LÊN ĐỒNG BỘ */
+    .break-mini-card.active-break {
+      display: flex;
+    }
+
+    /* Lớp nền dâng màu cam ấm theo thời gian thực giải lao */
+    .break-progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 0%;
+      background-color: rgba(238, 96, 0, 0.28);
+      pointer-events: none;
+      z-index: 0;
+      transition: width 0.8s ease;
+    }
+
+    .break-meta {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0.15rem;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .break-title-text {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--c-orange);
+      white-space: nowrap;
+      line-height: 1.25;
+    }
+
+    .break-time-text {
+      font-size: 1.2rem;
+      color: var(--c-white);
+      font-weight: normal;
+      white-space: nowrap;
+      line-height: 1.25;
+    }
+
+    /* NÚT ĐẾM NGƯỢC: MÀU CAM ĐẶC, KHÔNG VIỀN, CHỮ TRẮNG ĐỒNG BỘ VỚI MÔN HỌC */
+    .break-countdown-badge {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 6.2rem;
+      max-width: 9.5rem;
+      padding: 0.45rem 0.6rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--c-white);
+      background-color: var(--c-orange);
+      border: 2px solid var(--c-orange);
+      border-radius: 0.4rem;
+      user-select: none;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-shrink: 0;
     }
 
     /* ==========================================================================
@@ -1085,31 +1165,10 @@
     </div>
   </div>
 
-  <!-- THÁNG / NĂM / GIỜ VÀO HỌC (CHỮ TỰ NHIÊN CO DÃN 100%) -->
+  <!-- THÁNG / NĂM / GIỜ VÀO HỌC (NGÀY HỆ THỐNG TỰ ĐỘNG, CANH GIỮA, GẦN NHAU) -->
   <div class="date-strip">
-    <div class="date-unit">
-      <span class="date-label">Tháng</span>
-      <span id="view-month" class="date-val">09</span>
-      <select id="sel-month" class="date-edit-select">
-        <option value="1">01</option>
-        <option value="2">02</option>
-        <option value="3">03</option>
-        <option value="4">04</option>
-        <option value="5">05</option>
-        <option value="6">06</option>
-        <option value="7">07</option>
-        <option value="8">08</option>
-        <option value="9">09</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-      </select>
-      <span class="date-slash">/</span>
-      <span id="val-year" class="date-val" inputmode="numeric">2024</span>
-    </div>
-
+    <span class="date-live-text" id="lbl-live-date">Thứ Ba, 17/09/2024</span>
     <span class="date-bullet">•</span>
-    
     <div class="date-unit">
       <span class="date-label">Vào học</span>
       <span id="val-start-time" class="date-val" inputmode="numeric">12:30</span>
@@ -1126,7 +1185,7 @@
     <button type="button" class="day-tab-btn" id="tab-btn-7" data-day="7" role="tab" aria-controls="list-periods">Thứ 7</button>
   </div>
 
-  <!-- DANH SÁCH 5 TIẾT CHIỀU (BỐ CỤC 2 TẦNG: TIẾT Ở TRÊN, GIỜ Ở DƯỚI) -->
+  <!-- DANH SÁCH 5 TIẾT CHIỀU & THẺ GIẢI LAO ĐỒNG BỘ -->
   <div class="periods-list" id="list-periods"></div>
 
   <!-- GHI CHÚ THEO TỪNG THỨ (CÓ GỢI Ý MỜ THÔNG MINH) -->
@@ -1211,16 +1270,10 @@
         "7": ["SỬ", "KH TN", "HĐ TN", "C.NGHỆ", "ANH"]
       };
 
-      const NOW = new Date();
-      const CURRENT_REAL_YEAR = NOW.getFullYear();
-      const CURRENT_REAL_MONTH = NOW.getMonth() + 1;
-
       // CHUẨN HOÁ DỮ LIỆU HỒ SƠ HỌC SINH (CHỐNG LỖI ĐỊNH DẠNG DỮ LIỆU CŨ)
       function normalizeStudentProfile(std) {
         if (!std || typeof std !== "object") return createDefaultStudentProfile();
         if (typeof std.name !== "string" || !std.name.trim()) std.name = "Học Sinh 1";
-        if (typeof std.nam !== "number" || std.nam < 2020 || std.nam > 2099) std.nam = CURRENT_REAL_YEAR;
-        if (typeof std.thang !== "number" || std.thang < 1 || std.thang > 12) std.thang = CURRENT_REAL_MONTH;
         if (typeof std.gioVaoHoc !== "string") std.gioVaoHoc = "12:30";
 
         if (!std.monHoc || typeof std.monHoc !== "object") {
@@ -1273,8 +1326,6 @@
         return {
           id: id || ("std_" + Date.now()),
           name: name || "Học Sinh 1",
-          nam: CURRENT_REAL_YEAR,
-          thang: CURRENT_REAL_MONTH,
           gioVaoHoc: "12:30",
           monHoc: isBlank ? emptySchedule : JSON.parse(JSON.stringify(SAMPLE_TIMETABLE)),
           ghiChuTheoThu: { "2": "", "3": "", "4": "", "5": "", "6": "", "7": "" },
@@ -1301,6 +1352,8 @@
       };
 
       const KNOWN_STORAGE_KEYS = [
+        "tkb_multi_user_app_v37_perfect_unified_date",
+        "tkb_multi_user_app_v36_live_progress_and_breaks",
         "tkb_multi_user_app_v35_tier2_perfect",
         "tkb_multi_user_app_v34_lime_name_active",
         "tkb_multi_user_app_v33_live_period_active",
@@ -1310,15 +1363,7 @@
         "tkb_multi_user_app_v29_36rem_optimized",
         "tkb_multi_user_app_v28_desktop_optimized",
         "tkb_multi_user_app_v27_ultimate_fix",
-        "tkb_multi_user_app_v26_master_zero_defect",
-        "tkb_multi_user_app_v25_absolute_final",
-        "tkb_multi_user_app_v24_perfect_release",
-        "tkb_multi_user_app_v23_final_polish",
-        "tkb_multi_user_app_v22_tworows",
-        "tkb_multi_user_app_v21_flawless",
-        "tkb_multi_user_app_v20_spacing",
-        "tkb_multi_user_app_v19_master",
-        "tkb_multi_user_app_v18_master"
+        "tkb_multi_user_app_v26_master_zero_defect"
       ];
       const PRIMARY_STORAGE_KEY = KNOWN_STORAGE_KEYS[0];
 
@@ -1412,6 +1457,20 @@
         return displayH + ":" + mStr;
       }
 
+      // HÀM ĐỊNH DẠNG NGÀY HỆ THỐNG: "Thứ ..., ../../...." (BỎ CHỮ " NGÀY")
+      function getLiveDateFormatted() {
+        const now = new Date();
+        const dayIndex = now.getDay();
+        const dayNames = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
+        const dayName = dayNames[dayIndex] || "Thứ Hai";
+        const d = now.getDate();
+        const m = now.getMonth() + 1;
+        const y = now.getFullYear();
+        const dStr = d < 10 ? "0" + d : String(d);
+        const mStr = m < 10 ? "0" + m : String(m);
+        return dayName + ", " + dStr + "/" + mStr + "/" + y;
+      }
+
       function calculateTimeSlots(startTimeStr) {
         const { h, m } = parseTimeString(startTimeStr);
         let currentMin = h * 60 + m;
@@ -1459,9 +1518,7 @@
       const btnEditToggle = document.getElementById("btn-edit-toggle");
       const btnReset = document.getElementById("btn-reset");
 
-      const viewMonth = document.getElementById("view-month");
-      const selMonth = document.getElementById("sel-month");
-      const valYear = document.getElementById("val-year");
+      const lblLiveDate = document.getElementById("lbl-live-date");
       const valStartTime = document.getElementById("val-start-time");
 
       const daysTabBar = document.querySelector(".days-tab-bar");
@@ -1519,7 +1576,7 @@
         return "sub-default";
       }
 
-      // TẠO 5 TIẾT HỌC BỐ CỤC 2 TẦNG (TIẾT TRÊN, GIỜ DƯỚI)
+      // TẠO 5 TIẾT HỌC BỐ CỤC 2 TẦNG + LỚP NỀN DÂNG TIẾN TRÌNH
       let activeStudent = getActiveStudent();
       let calculatedSlots = calculateTimeSlots(activeStudent.gioVaoHoc || "12:30");
 
@@ -1527,20 +1584,27 @@
         const card = document.createElement("div");
         card.className = "period-card";
 
+        // Lớp nền dâng ngang theo thời gian thực (Z-index: 0)
+        const progressFill = document.createElement("div");
+        progressFill.className = "period-progress-fill";
+        card.appendChild(progressFill);
+
+        // Cột bên trái: 2 tầng (Tiết trên, Giờ dưới, Z-index: 1)
         const metaBox = document.createElement("div");
-        metaBox.className = "period-meta"; // Xếp dọc 2 dòng
+        metaBox.className = "period-meta";
 
         const pName = document.createElement("span");
         pName.className = "p-name";
-        pName.textContent = slot.label; // "Tiết X" nguyên vẹn ở dòng trên
+        pName.textContent = slot.label;
 
         const pTime = document.createElement("span");
         pTime.className = "p-time";
-        pTime.textContent = slot.gio; // Giờ học ngay ngắn ở dòng dưới
+        pTime.textContent = slot.gio;
 
         metaBox.appendChild(pName);
         metaBox.appendChild(pTime);
 
+        // Nút môn học bên phải (Z-index: 1)
         const badge = document.createElement("div");
         badge.className = "subject-badge";
         badge.tabIndex = 0;
@@ -1561,10 +1625,10 @@
 
         card.appendChild(metaBox);
         card.appendChild(badge);
-        listPeriods.appendChild(card);
 
         return {
           card,
+          progressFill,
           badge,
           update(subjectName) {
             let nameStr = "TRỐNG";
@@ -1583,6 +1647,49 @@
         };
       });
 
+      // TẠO 4 THẺ GIẢI LAO ĐỒNG BỘ 100% CẤU TRÚC VÀ NỀN DÂNG CAM
+      const breakCards = [];
+      for (let i = 0; i < 4; i++) {
+        const bCard = document.createElement("div");
+        bCard.className = "break-mini-card";
+
+        // Lớp nền dâng màu cam ấm
+        const bFill = document.createElement("div");
+        bFill.className = "break-progress-fill";
+        bCard.appendChild(bFill);
+
+        // Cột trái 2 tầng
+        const bMeta = document.createElement("div");
+        bMeta.className = "break-meta";
+
+        const bTitle = document.createElement("span");
+        bTitle.className = "break-title-text";
+        bTitle.textContent = "Giải lao";
+
+        const bTime = document.createElement("span");
+        bTime.className = "break-time-text";
+
+        bMeta.appendChild(bTitle);
+        bMeta.appendChild(bTime);
+
+        // Nút đếm ngược bên phải đồng bộ tuyệt đối với nút môn học
+        const bCount = document.createElement("div");
+        bCount.className = "break-countdown-badge";
+
+        bCard.appendChild(bMeta);
+        bCard.appendChild(bCount);
+
+        breakCards.push({ card: bCard, fill: bFill, time: bTime, count: bCount });
+      }
+
+      // ĐƯA TIẾT HỌC VÀ THẺ GIẢI LAO XEN KẼ VÀO MÀN HÌNH
+      for (let i = 0; i < 5; i++) {
+        listPeriods.appendChild(periodCards[i].card);
+        if (i < 4) {
+          listPeriods.appendChild(breakCards[i].card);
+        }
+      }
+
       function updateCalculatedScheduleTimes(timeStr) {
         calculatedSlots = calculateTimeSlots(timeStr);
         for (let i = 0; i < 5; i++) {
@@ -1592,7 +1699,9 @@
         }
       }
 
-      // TỰ ĐỘNG PHÁT SÁNG CHỮ "TIẾT..." SANG MÀU XANH LÁ MẠ RỰC RỠ
+      // ========================================================================
+      // TỰ ĐỘNG CẬP NHẬT TIẾN TRÌNH TIẾT HỌC & GIỜ GIẢI LAO THEO THỜI GIAN THỰC
+      // ========================================================================
       function updateLiveActivePeriod() {
         const now = new Date();
         const realDay = now.getDay();
@@ -1601,11 +1710,53 @@
 
         const currentTotalMins = now.getHours() * 60 + now.getMinutes();
 
+        // 1. CẬP NHẬT 5 TIẾT HỌC (NỀN DÂNG XANH THEO TIẾN ĐỘ)
         for (let i = 0; i < 5; i++) {
           if (!periodCards[i]) continue;
           const slot = calculatedSlots[i];
           const isActive = isViewingToday && slot && (currentTotalMins >= slot.startMin && currentTotalMins < slot.endMin);
+
           periodCards[i].card.classList.toggle("period-active", isActive);
+
+          if (isActive && slot) {
+            const duration = slot.endMin - slot.startMin;
+            const elapsed = currentTotalMins - slot.startMin;
+            const pct = Math.min(100, Math.max(0, Math.round((elapsed / duration) * 100)));
+            periodCards[i].progressFill.style.width = pct + "%";
+          } else {
+            periodCards[i].progressFill.style.width = "0%";
+          }
+        }
+
+        // 2. CẬP NHẬT 4 THẺ GIẢI LAO (NỀN DÂNG CAM THEO TIẾN ĐỘ & NÚT CAM CHỮ TRẮNG)
+        for (let i = 0; i < 4; i++) {
+          if (!breakCards[i]) continue;
+          const prevSlot = calculatedSlots[i];
+          const nextSlot = calculatedSlots[i + 1];
+
+          if (!prevSlot || !nextSlot) {
+            breakCards[i].card.classList.remove("active-break");
+            continue;
+          }
+
+          const breakStart = prevSlot.endMin;
+          const breakEnd = nextSlot.startMin;
+          const isBreakActive = isViewingToday && (currentTotalMins >= breakStart && currentTotalMins < breakEnd);
+
+          breakCards[i].card.classList.toggle("active-break", isBreakActive);
+
+          if (isBreakActive) {
+            const duration = breakEnd - breakStart;
+            const elapsed = currentTotalMins - breakStart;
+            const pct = Math.min(100, Math.max(0, Math.round((elapsed / duration) * 100)));
+            const remaining = breakEnd - currentTotalMins;
+
+            breakCards[i].fill.style.width = pct + "%";
+            breakCards[i].time.textContent = formatMinutesToTime(breakStart) + " - " + formatMinutesToTime(breakEnd);
+            breakCards[i].count.textContent = "Còn " + remaining + "p";
+          } else {
+            breakCards[i].fill.style.width = "0%";
+          }
         }
       }
 
@@ -1841,7 +1992,6 @@
         if (rootData.activeId === newStudentId && !enterEditModeNow) return;
 
         if (isEditMode) {
-          commitYear();
           commitStartTime();
           flushSaveNote();
         }
@@ -1994,7 +2144,6 @@
         closeNamePromptDialog();
 
         if (promptMode === "create") {
-          // TẠO MỚI: TẤT CẢ CÁC TIẾT ĐỂ TRỐNG (isBlank = true) VÀ TỰ ĐỘNG BẬT SẴN CHẾ ĐỘ SỬA
           const newStudent = createDefaultStudentProfile("std_" + Date.now(), typed, true);
           rootData.students.push(newStudent);
           switchActiveStudent(newStudent.id, true);
@@ -2050,13 +2199,8 @@
 
         lblActiveUserName.textContent = std.name;
 
-        const m = std.thang || CURRENT_REAL_MONTH;
-        const mFormatted = m < 10 ? "0" + m : String(m);
-        viewMonth.textContent = mFormatted;
-        selMonth.value = String(m);
-
-        valYear.textContent = String(std.nam || CURRENT_REAL_YEAR);
-        valYear.setAttribute("placeholder", String(std.nam || CURRENT_REAL_YEAR));
+        // CẬP NHẬT DÒNG NGÀY HỆ THỐNG TỰ ĐỘNG (BỎ CHỮ " NGÀY")
+        lblLiveDate.textContent = getLiveDateFormatted();
 
         const { h, min } = (function () {
           const parsed = parseTimeString(std.gioVaoHoc || "12:30");
@@ -2067,7 +2211,6 @@
         valStartTime.setAttribute("placeholder", formattedStart);
 
         txtDayNote.readOnly = !isEditMode;
-        valYear.contentEditable = isEditMode ? "true" : "false";
         valStartTime.contentEditable = isEditMode ? "true" : "false";
 
         // GỢI Ý MỜ CHO Ô GHI CHÚ
@@ -2104,7 +2247,7 @@
           }
         }
 
-        // TỰ ĐỘNG PHÁT SÁNG CHỮ "TIẾT..." KHI ĐẾN GIỜ HỌC
+        // TỰ ĐỘNG CẬP NHẬT TIẾN TRÌNH TIẾT HỌC & GIỜ GIẢI LAO
         updateLiveActivePeriod();
 
         txtDayNote.value = (std.ghiChuTheoThu && std.ghiChuTheoThu[String(currentDay)]) || "";
@@ -2116,7 +2259,6 @@
         const val = Number(btn.getAttribute("data-day"));
         if (val !== currentDay) {
           if (isEditMode) {
-            commitYear();
             commitStartTime();
             flushSaveNote();
           }
@@ -2133,7 +2275,6 @@
           if (nextDay > 7) nextDay = 2;
           if (nextDay < 2) nextDay = 7;
           if (isEditMode) {
-            commitYear();
             commitStartTime();
             flushSaveNote();
           }
@@ -2149,7 +2290,6 @@
         isToggling = true;
 
         if (isEditMode) {
-          commitYear();
           commitStartTime();
           flushSaveNote();
         }
@@ -2166,14 +2306,6 @@
         setTimeout(() => {
           isToggling = false;
         }, 150);
-      });
-
-      selMonth.addEventListener("change", (e) => {
-        const std = getActiveStudent();
-        std.thang = Number(e.target.value);
-        const mFormatted = std.thang < 10 ? "0" + std.thang : String(std.thang);
-        viewMonth.textContent = mFormatted;
-        silentSave();
       });
 
       function selectAllText(el) {
@@ -2193,42 +2325,7 @@
         document.execCommand("insertText", false, clean);
       }
 
-      valYear.addEventListener("paste", (e) => sanitizePasteNumeric(e, false));
       valStartTime.addEventListener("paste", (e) => sanitizePasteNumeric(e, true));
-
-      // TỰ ĐỘNG HIỂU NĂM 2 CHỮ SỐ (GÕ 24 -> 2024, GÕ 25 -> 2025)
-      function commitYear() {
-        const std = getActiveStudent();
-        let typed = valYear.textContent.replace(/\D/g, "").trim();
-        let val = Number(typed);
-        if (val >= 20 && val <= 99) {
-          val += 2000;
-        }
-        if (!val || val < 2020) val = CURRENT_REAL_YEAR;
-        if (val > 2099) val = 2099;
-        std.nam = val;
-        valYear.textContent = String(val);
-        valYear.setAttribute("placeholder", String(val));
-        silentSave();
-      }
-
-      valYear.addEventListener("focus", function () {
-        if (!isEditMode) return;
-        selectAllText(this);
-      });
-
-      valYear.addEventListener("blur", commitYear);
-      valYear.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          commitYear();
-          valYear.blur();
-        } else if (e.key === "Tab") {
-          e.preventDefault();
-          commitYear();
-          valStartTime.focus();
-        }
-      });
 
       function commitStartTime() {
         const std = getActiveStudent();
@@ -2304,8 +2401,6 @@
         );
 
         if (agreed) {
-          std.nam = CURRENT_REAL_YEAR;
-          std.thang = CURRENT_REAL_MONTH;
           std.gioVaoHoc = "12:30";
           std.monHoc = JSON.parse(JSON.stringify(SAMPLE_TIMETABLE));
           std.ghiChuTheoThu = { "2": "", "3": "", "4": "", "5": "", "6": "", "7": "" };
@@ -2371,7 +2466,7 @@
       });
       window.addEventListener("beforeunload", flushSaveNote);
 
-      // TỰ ĐỘNG CẬP NHẬT TIẾT ĐANG HỌC MỖI 30 GIÂY
+      // TỰ ĐỘNG CẬP NHẬT TIẾN TRÌNH TIẾT HỌC & GIỜ GIẢI LAO MỖI 30 GIÂY
       setInterval(updateLiveActivePeriod, 30000);
 
       // KHỞI CHẠY HỆ THỐNG
