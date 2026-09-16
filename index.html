@@ -500,7 +500,7 @@
 
     .period-card {
       position: relative;
-      overflow: hidden; /* Cắt lớp nền tiến độ theo góc bo tròn */
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1251,7 +1251,7 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT XỬ LÝ TOÀN BỘ LOGIC HỆ THỐNG -->
+  <!-- JAVASCRIPT XỬ LÝ TOÀN BỘ LOGIC HỆ THỐNG ĐÃ DỌN SẠCH 100% MÃ THỪA -->
   <script>
     (function () {
       "use strict";
@@ -1270,7 +1270,7 @@
         "7": ["SỬ", "KH TN", "HĐ TN", "C.NGHỆ", "ANH"]
       };
 
-      // CHUẨN HOÁ DỮ LIỆU HỒ SƠ HỌC SINH (CHỐNG LỖI ĐỊNH DẠNG DỮ LIỆU CŨ)
+      // CHUẨN HOÁ DỮ LIỆU HỒ SƠ HỌC SINH (SẠCH SẼ, KHÔNG CÒN MÃ THỪA THÁNG NĂM CŨ)
       function normalizeStudentProfile(std) {
         if (!std || typeof std !== "object") return createDefaultStudentProfile();
         if (typeof std.name !== "string" || !std.name.trim()) std.name = "Học Sinh 1";
@@ -1352,6 +1352,7 @@
       };
 
       const KNOWN_STORAGE_KEYS = [
+        "tkb_multi_user_app_v38_clean_master_final",
         "tkb_multi_user_app_v37_perfect_unified_date",
         "tkb_multi_user_app_v36_live_progress_and_breaks",
         "tkb_multi_user_app_v35_tier2_perfect",
@@ -1672,7 +1673,7 @@
         bMeta.appendChild(bTitle);
         bMeta.appendChild(bTime);
 
-        // Nút đếm ngược bên phải đồng bộ tuyệt đối với nút môn học
+        // Nút đếm ngược bên phải: nền cam đặc, chữ trắng, không viền
         const bCount = document.createElement("div");
         bCount.className = "break-countdown-badge";
 
@@ -1700,9 +1701,14 @@
       }
 
       // ========================================================================
-      // TỰ ĐỘNG CẬP NHẬT TIẾN TRÌNH TIẾT HỌC & GIỜ GIẢI LAO THEO THỜI GIAN THỰC
+      // TỰ ĐỘNG CẬP NHẬT TIẾN TRÌNH TIẾT HỌC, GIỜ GIẢI LAO & NHẢY NGÀY XUYÊN ĐÊM
       // ========================================================================
       function updateLiveActivePeriod() {
+        // Tự động cập nhật lại dòng ngày hệ thống nếu chạy xuyên đêm qua 00:00
+        if (lblLiveDate) {
+          lblLiveDate.textContent = getLiveDateFormatted();
+        }
+
         const now = new Date();
         const realDay = now.getDay();
         const todayIndex = (realDay >= 1 && realDay <= 6) ? (realDay + 1) : 2;
@@ -2466,7 +2472,7 @@
       });
       window.addEventListener("beforeunload", flushSaveNote);
 
-      // TỰ ĐỘNG CẬP NHẬT TIẾN TRÌNH TIẾT HỌC & GIỜ GIẢI LAO MỖI 30 GIÂY
+      // TỰ ĐỘNG CẬP NHẬT TIẾN TRÌNH TIẾT HỌC, GIỜ GIẢI LAO & NGÀY XUYÊN ĐÊM MỖI 30 GIÂY
       setInterval(updateLiveActivePeriod, 30000);
 
       // KHỞI CHẠY HỆ THỐNG
