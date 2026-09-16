@@ -8,7 +8,7 @@
 ## 🌟 NHỮNG TIỆN ÍCH TUYỆT VỜI ỨNG DỤNG MANG LẠI CHO BẠN
 
 1. 📅 **Tự động nhận diện ngày hôm nay:**
-   - Mỗi khi bạn mở ứng dụng, máy sẽ tự động hiển thị đúng Thứ và Ngày hôm nay (ví dụ: *Thứ Ba, 17/09/2024*). Bạn không cần phải mất công chỉnh lại tháng hay gõ năm bằng tay.
+   - Mỗi khi bạn mở ứng dụng, máy sẽ tự động hiển thị đúng Thứ và Ngày hôm nay (ví dụ: *Thứ Ba, 17/09/2026*). Bạn không cần phải mất công chỉnh lại tháng hay gõ năm bằng tay.
 
 2. ⏰ **Hiển thị sinh động tiết học đang diễn ra:**
    - Khi đồng hồ điểm đúng giờ học, dòng chữ **"Tiết..."** sẽ tự động **sáng rực màu xanh lá mạ**.
