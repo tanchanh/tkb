@@ -104,7 +104,8 @@
       .date-strip,
       .days-tab-bar,
       .periods-list,
-      .day-note-box {
+      .day-note-box,
+      .share-box {
         max-width: 36rem;
         margin-left: auto;
         margin-right: auto;
@@ -769,7 +770,93 @@
     }
 
     /* ==========================================================================
-       10. HỘP THOẠI CHỌN MÔN (CENTERED MODAL)
+       10. KHỐI CHIA SẺ MÃ QR ĐẠT CHUẨN LƯỚI TOÁN HỌC (240PX GỒM CẢ LỀ)
+       ========================================================================== */
+    .share-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.0rem 0.8rem;
+      background-color: var(--c-dark-1);
+      border: 2px solid var(--c-blue);
+      border-radius: 0.6rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .share-heading {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--c-white);
+      margin-bottom: 0.25rem;
+    }
+
+    .share-subtitle {
+      font-size: 1.15rem;
+      color: var(--c-gray);
+      margin-bottom: 0.85rem;
+      line-height: 1.4;
+    }
+
+    /* KHUNG TRẮNG TỔNG THỂ: ĐÚNG 240PX X 240PX (40 ĐƠN VỊ LƯỚI 6PX) */
+    .share-qr-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 240px;
+      height: 240px;
+      padding: 21px; /* Lề trắng ngoài đúng 21px mỗi bên (3.5 đơn vị lưới) */
+      background-color: var(--c-white);
+      border-radius: 0.6rem;
+      margin-bottom: 0.85rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+    }
+
+    /* MÃ QR GỐC: ĐÚNG 198PX X 198PX (33 Ô VUÔNG X 6PX = 198PX SẮC NÉT TUYỆT ĐỐI) */
+    .share-qr-svg {
+      width: 198px;
+      height: 198px;
+      display: block;
+    }
+
+    .share-url-link {
+      font-family: inherit;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--c-lime);
+      text-decoration: none;
+      word-break: break-all;
+      margin-bottom: 0.65rem;
+      transition: color 0.15s ease;
+    }
+
+    .share-url-link:hover {
+      text-decoration: underline;
+    }
+
+    .btn-copy-link {
+      background-color: var(--c-blue);
+      border: 2px solid var(--c-blue);
+      color: var(--c-white);
+      padding: 0.45rem 1.2rem;
+      font-size: 1.2rem;
+    }
+
+    .share-toast {
+      display: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--c-lime);
+      margin-top: 0.5rem;
+    }
+
+    .share-toast.show {
+      display: block;
+    }
+
+    /* ==========================================================================
+       11. HỘP THOẠI CHỌN MÔN (CENTERED MODAL)
        ========================================================================== */
     .modal-backdrop {
       position: fixed;
@@ -933,7 +1020,7 @@
     }
 
     /* ==========================================================================
-       11. HỘP THOẠI NHẬP TÊN HỌC SINH (THÊM MỚI / ĐỔI TÊN)
+       12. HỘP THOẠI NHẬP TÊN HỌC SINH (THÊM MỚI / ĐỔI TÊN)
        ========================================================================== */
     #modal-name-prompt {
       z-index: 10000;
@@ -996,7 +1083,7 @@
     }
 
     /* ==========================================================================
-       12. HỘP THOẠI CẤU HÌNH HỌC SINH (⚙️ DÃN CÁCH RỘNG RÃI)
+       13. HỘP THOẠI CẤU HÌNH HỌC SINH (⚙️ DÃN CÁCH RỘNG RÃI)
        ========================================================================== */
     #modal-student-actions {
       z-index: 10000;
@@ -1066,7 +1153,7 @@
     }
 
     /* ==========================================================================
-       13. POPUP XÁC NHẬN NỘI BỘ (Z-INDEX 10001 NỔI TRÊN CÙNG)
+       14. POPUP XÁC NHẬN NỘI BỘ (Z-INDEX 10001 NỔI TRÊN CÙNG)
        ========================================================================== */
     #modal-confirm {
       z-index: 10001;
@@ -1194,6 +1281,23 @@
     <textarea class="day-note-textarea" id="txt-day-note" maxlength="5000" readonly></textarea>
   </div>
 
+  <!-- KHỐI CHIA SẺ MÃ QR ĐẠT CHUẨN LƯỚI TOÁN HỌC (240PX GỒM CẢ LỀ NGOÀI) -->
+  <div class="share-box">
+    <h2 class="share-heading">Chia sẻ thời khoá biểu</h2>
+    <p class="share-subtitle">Quét mã QR bằng điện thoại để mở ứng dụng ngay</p>
+    <div class="share-qr-wrap">
+      <svg class="share-qr-svg" viewBox="0 0 33 33" shape-rendering="crispEdges">
+        <path fill="#fff" d="M0 0h33v33H0z"/>
+        <path d="M2 2h7v1H2zM10 2h1v1H10zM12 2h1v1H12zM14 2h1v1H14zM20 2h1v1H20zM24 2h7v1H24zM2 3h1v6h-1zM8 3h1v6h-1zM11 3h1v2h-1zM18 3h2v2h-2zM22 3h1v1H22zM24 3h1v6h-1zM30 3h1v6h-1zM4 4h3v3h-3zM12 4h2v1H12zM15 4h1v1H15zM17 4h1v2h-1zM20 4h2v1H20zM26 4h3v3h-3zM10 5h1v7h-1zM14 5h1v7h-1zM16 5h1v6h-1zM18 5h1v2h-1zM20 5h1v1H20zM11 6h3v1H11zM15 6h1v2h-1zM21 6h2v1H21zM11 7h1v1H11zM13 7h1v1H13zM17 7h1v1H17zM19 7h1v1H19zM22 7h1v4h-1zM3 8h5v1H3zM12 8h1v3h-1zM18 8h1v1H18zM20 8h1v1H20zM25 8h5v1H25zM21 9h1v2h-1zM2 10h1v3h-1zM6 10h1v1H6zM8 10h2v1H8zM15 10h1v1H15zM17 10h1v1H17zM19 10h1v1H19zM23 10h5v1H23zM30 10h1v1H30zM4 11h2v1H4zM9 11h1v3h-1zM11 11h1v1H11zM13 11h1v3h-1zM24 11h1v2h-1zM26 11h1v2h-1zM28 11h1v2h-1zM3 12h1v1H3zM5 12h2v1H5zM8 12h1v1H8zM15 12h4v1H15zM20 12h2v4h-2zM23 12h1v3h-1zM25 12h1v1H25zM27 12h1v3h-1zM30 12h1v1H30zM6 13h2v1H6zM10 13h2v1H10zM14 13h2v3h-2zM17 13h3v1H17zM22 13h1v1H22zM2 14h2v3h-2zM6 14h1v2h-1zM8 14h1v1H8zM12 14h1v1H12zM19 14h1v1H19zM24 14h2v1H24zM28 14h2v1H28zM4 15h1v2h-1zM9 15h1v3h-1zM16 15h3v1H16zM22 15h1v1H22zM24 15h1v2h-1zM28 15h1v2h-1zM7 16h2v1H7zM11 16h4v1H11zM17 16h1v1H17zM20 16h1v1H20zM25 16h3v1H25zM29 16h1v3h-1zM5 17h1v4h-1zM7 17h1v1H7zM10 17h2v1H10zM16 17h1v2h-1zM21 17h2v3h-2zM8 18h1v1H8zM11 18h1v1H11zM14 18h2v1H14zM18 18h3v1H18zM23 18h1v1H23zM26 18h3v1H26zM2 19h3v1H2zM9 19h2v1H9zM13 19h1v1H13zM18 19h1v2h-1zM25 19h2v1H25zM28 19h1v2h-1zM6 20h1v1H6zM8 20h1v1H8zM10 20h1v2h-1zM14 20h4v1H14zM20 20h2v1H20zM24 20h1v1H24zM26 20h2v1H26zM29 20h2v1H29zM4 21h1v1H4zM7 21h1v1H7zM9 21h1v2h-1zM11 21h1v1H11zM13 21h1v1H13zM15 21h1v3h-1zM19 21h1v1H19zM21 21h3v2h-3zM29 21h1v1H29zM2 22h2v1H2zM8 22h1v1H8zM14 22h1v1H14zM24 22h3v1H24zM10 23h3v1H10zM16 23h1v1H16zM18 23h1v2h-1zM22 23h1v4h-1zM26 23h3v2h-3zM2 24h7v1H2zM10 24h2v1H10zM17 24h1v1H17zM20 24h2v1H20zM24 24h1v1H24zM30 24h1v1H30zM2 25h1v6h-1zM8 25h1v6h-1zM11 25h3v1H11zM16 25h1v2h-1zM19 25h2v2h-2zM26 25h1v2h-1zM28 25h2v1H28zM4 26h3v3h-3zM10 26h1v1H10zM13 26h1v2h-1zM15 26h1v1H15zM21 26h1v3h-1zM23 26h3v1H23zM27 26h1v2h-1zM30 26h1v1H30zM11 27h1v1H11zM14 27h1v1H14zM17 27h2v1H17zM20 27h1v4h-1zM25 27h1v1H25zM28 27h2v2h-2zM12 28h1v1H12zM15 28h1v1H15zM18 28h1v3h-1zM24 28h1v3h-1zM26 28h1v3h-1zM30 28h1v1H30zM11 29h1v1H11zM13 29h2v1H13zM19 29h1v2h-1zM22 29h1v1H22zM25 29h1v1H25zM27 29h2v1H27zM3 30h5v1H3zM10 30h1v1H10zM14 30h1v1H14zM29 30h1v1H29z"/>
+      </svg>
+    </div>
+    <a href="https://tkb.tanchanh.workers.dev" target="_blank" rel="noopener noreferrer" class="share-url-link">https://tkb.tanchanh.workers.dev</a>
+    <button type="button" class="btn-action btn-copy-link" id="btn-copy-link">
+      <span>📋 Sao chép link</span>
+    </button>
+    <div class="share-toast" id="share-copy-toast">Đã sao chép liên kết vào bộ nhớ tạm!</div>
+  </div>
+
   <!-- HỘP THOẠI CHỌN MÔN (CENTERED MODAL) -->
   <div class="modal-backdrop" id="modal-picker" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
     <div class="picker-sheet">
@@ -1251,7 +1355,7 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT XỬ LÝ TOÀN BỘ LOGIC HỆ THỐNG ĐÃ DỌN SẠCH 100% MÃ THỪA -->
+  <!-- JAVASCRIPT XỬ LÝ TOÀN BỘ LOGIC HỆ THỐNG -->
   <script>
     (function () {
       "use strict";
@@ -1270,7 +1374,7 @@
         "7": ["SỬ", "KH TN", "HĐ TN", "C.NGHỆ", "ANH"]
       };
 
-      // CHUẨN HOÁ DỮ LIỆU HỒ SƠ HỌC SINH (SẠCH SẼ, KHÔNG CÒN MÃ THỪA THÁNG NĂM CŨ)
+      // CHUẨN HOÁ DỮ LIỆU HỒ SƠ HỌC SINH (KHÔNG CÒN MÃ THỪA THÁNG NĂM CŨ)
       function normalizeStudentProfile(std) {
         if (!std || typeof std !== "object") return createDefaultStudentProfile();
         if (typeof std.name !== "string" || !std.name.trim()) std.name = "Học Sinh 1";
@@ -1352,6 +1456,8 @@
       };
 
       const KNOWN_STORAGE_KEYS = [
+        "tkb_multi_user_app_v40_pixel_perfect_final",
+        "tkb_multi_user_app_v39_qr_share_perfect",
         "tkb_multi_user_app_v38_clean_master_final",
         "tkb_multi_user_app_v37_perfect_unified_date",
         "tkb_multi_user_app_v36_live_progress_and_breaks",
@@ -1360,11 +1466,7 @@
         "tkb_multi_user_app_v33_live_period_active",
         "tkb_multi_user_app_v32_reset_edit_auto",
         "tkb_multi_user_app_v31_spacing_perfect",
-        "tkb_multi_user_app_v30_edit_only_sample",
-        "tkb_multi_user_app_v29_36rem_optimized",
-        "tkb_multi_user_app_v28_desktop_optimized",
-        "tkb_multi_user_app_v27_ultimate_fix",
-        "tkb_multi_user_app_v26_master_zero_defect"
+        "tkb_multi_user_app_v30_edit_only_sample"
       ];
       const PRIMARY_STORAGE_KEY = KNOWN_STORAGE_KEYS[0];
 
@@ -1556,6 +1658,11 @@
       const btnConfirmCancel = document.getElementById("btn-confirm-cancel");
       const btnConfirmOk = document.getElementById("btn-confirm-ok");
 
+      // KHỐI CHIA SẺ VÀ SAO CHÉP LINK
+      const btnCopyLink = document.getElementById("btn-copy-link");
+      const shareCopyToast = document.getElementById("share-copy-toast");
+      let toastTimer = null;
+
       function hasAnyModalOpen() {
         return modalPicker.classList.contains("open") ||
                modalNamePrompt.classList.contains("open") ||
@@ -1704,7 +1811,6 @@
       // TỰ ĐỘNG CẬP NHẬT TIẾN TRÌNH TIẾT HỌC, GIỜ GIẢI LAO & NHẢY NGÀY XUYÊN ĐÊM
       // ========================================================================
       function updateLiveActivePeriod() {
-        // Tự động cập nhật lại dòng ngày hệ thống nếu chạy xuyên đêm qua 00:00
         if (lblLiveDate) {
           lblLiveDate.textContent = getLiveDateFormatted();
         }
@@ -2073,7 +2179,7 @@
       });
 
       // ========================================================================
-      // HỘP THOẠI NHẬP TÊN (THÊM MỚI / ĐỔI TÊN)
+      // HỘP THOẠI NHẬP TÊN HỌC SINH (THÊM MỚI / ĐỔI TÊN)
       // ========================================================================
       let promptMode = "create";
       let promptTargetStudent = null;
@@ -2195,6 +2301,41 @@
           btnConfirmOk.onclick = () => handleChoice(true);
           btnConfirmCancel.onclick = () => handleChoice(false);
         });
+      }
+
+      // SAO CHÉP LIÊN KẾT CHIA SẺ
+      if (btnCopyLink) {
+        btnCopyLink.addEventListener("click", () => {
+          const urlToCopy = "https://tkb.tanchanh.workers.dev";
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(urlToCopy).then(showShareToast).catch(() => fallbackCopy(urlToCopy));
+          } else {
+            fallbackCopy(urlToCopy);
+          }
+        });
+      }
+
+      function fallbackCopy(text) {
+        const temp = document.createElement("textarea");
+        temp.value = text;
+        temp.style.position = "fixed";
+        temp.style.opacity = "0";
+        document.body.appendChild(temp);
+        temp.select();
+        try {
+          document.execCommand("copy");
+          showShareToast();
+        } catch (e) {}
+        document.body.removeChild(temp);
+      }
+
+      function showShareToast() {
+        if (!shareCopyToast) return;
+        shareCopyToast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          shareCopyToast.classList.remove("show");
+        }, 2500);
       }
 
       // ========================================================================
