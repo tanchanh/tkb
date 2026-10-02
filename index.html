@@ -770,7 +770,7 @@
     }
 
     /* ==========================================================================
-       10. KHỐI CHIA SẺ MÃ QR ĐẠT CHUẨN LƯỚI TOÁN HỌC (240PX GỒM CẢ LỀ)
+       10. KHỐI CHIA SẺ MÃ QR ĐẠT CHUẨN LƯỚI TOÁN HỌC (240PX GỒM CẢ LỀ NGOÀI)
        ========================================================================== */
     .share-box {
       display: flex;
@@ -1365,16 +1365,17 @@
         "C.NGHỆ", "GD CD", "GD ĐP", "NHẠC", "VẼ", "HĐ TN", "S H L"
       ];
 
+      // DỮ LIỆU THỜI KHOÁ BIỂU MẪU MỚI CHÍNH XÁC 100% CỦA BẠN
       const SAMPLE_TIMETABLE = {
-        "2": ["TIN", "GD TC", "ANH", "HĐ TN", "HĐ TN"],
-        "3": ["TOÁN", "TOÁN", "VĂN", "KH TN", "ĐỊA"],
-        "4": ["NHẠC", "GD TC", "GD CD", "C.NGHỆ", "TOÁN"],
-        "5": ["VẼ", "ANH", "GD ĐP", "VĂN", "SỬ"],
-        "6": ["TOÁN", "VĂN", "VĂN", "KH TN", "KH TN"],
-        "7": ["SỬ", "KH TN", "HĐ TN", "C.NGHỆ", "ANH"]
+        "2": ["C.NGHỆ", "VĂN", "VĂN", "HĐ TN", "S H L"],
+        "3": ["TOÁN", "TOÁN", "KH TN", "ANH", "VẼ"],
+        "4": ["ĐỊA", "HĐ TN", "KH TN", "GD TC", "ANH"],
+        "5": ["C.NGHỆ", "GD CD", "VĂN", "ĐỊA", "TOÁN"],
+        "6": ["SỬ", "TOÁN", "GD ĐP", "ANH", "GD TC"],
+        "7": ["TIN", "VĂN", "NHẠC", "KH TN", "KH TN"]
       };
 
-      // CHUẨN HOÁ DỮ LIỆU HỒ SƠ HỌC SINH (KHÔNG CÒN MÃ THỪA THÁNG NĂM CŨ)
+      // CHUẨN HOÁ DỮ LIỆU HỒ SƠ HỌC SINH
       function normalizeStudentProfile(std) {
         if (!std || typeof std !== "object") return createDefaultStudentProfile();
         if (typeof std.name !== "string" || !std.name.trim()) std.name = "Học Sinh 1";
@@ -1456,6 +1457,7 @@
       };
 
       const KNOWN_STORAGE_KEYS = [
+        "tkb_multi_user_app_v41_new_curriculum_sample",
         "tkb_multi_user_app_v40_pixel_perfect_final",
         "tkb_multi_user_app_v39_qr_share_perfect",
         "tkb_multi_user_app_v38_clean_master_final",
