@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,9 @@
     /* ==========================================================================
        1. RESET & BOX-SIZING
        ========================================================================== */
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -83,7 +86,8 @@
       color: var(--c-white);
     }
 
-    h4, h5 {
+    h4,
+    h5 {
       font-size: 1.2rem;
       font-weight: bold;
       color: var(--c-white);
@@ -98,6 +102,7 @@
        TỐI ƯU MÀN HÌNH LỚN: GIỚI HẠN 36REM (~576PX) CĂN GIỮA NHỎ GỌN
        ========================================================================== */
     @media (min-width: 600px) {
+
       h1,
       .author-signature,
       .top-controls-container,
@@ -806,7 +811,8 @@
       justify-content: center;
       width: 240px;
       height: 240px;
-      padding: 21px; /* Lề trắng ngoài đúng 21px mỗi bên (3.5 đơn vị lưới) */
+      padding: 21px;
+      /* Lề trắng ngoài đúng 21px mỗi bên (3.5 đơn vị lưới) */
       background-color: var(--c-white);
       border-radius: 0.6rem;
       margin-bottom: 0.85rem;
@@ -1208,6 +1214,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- TIÊU ĐỀ & TÁC GIẢ -->
@@ -1222,8 +1229,8 @@
         <button type="button" class="btn-user-select" id="btn-user-toggle" aria-haspopup="true" aria-expanded="false">
           <span class="avatar-squircle">
             <svg class="avatar-svg" viewBox="0 0 36 36">
-              <circle cx="18" cy="12" r="5" fill="#FFFFFF"/>
-              <path d="M 8 30 C 8 23.5, 12 20.5, 18 20.5 C 24 20.5, 28 23.5, 28 30 Z" fill="#FFFFFF"/>
+              <circle cx="18" cy="12" r="5" fill="#FFFFFF" />
+              <path d="M 8 30 C 8 23.5, 12 20.5, 18 20.5 C 24 20.5, 28 23.5, 28 30 Z" fill="#FFFFFF" />
             </svg>
           </span>
           <span class="btn-user-name-text" id="lbl-active-user-name">Học Sinh 1</span>
@@ -1236,7 +1243,7 @@
           <button type="button" class="btn-create-user" id="btn-create-user-trigger">
             <span class="plus-squircle">
               <svg class="plus-svg" viewBox="0 0 20 20">
-                <path d="M 10 4 L 10 16 M 4 10 L 16 10" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 10 4 L 10 16 M 4 10 L 16 10" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
               </svg>
             </span>
             <span>Thêm học sinh</span>
@@ -1264,12 +1271,18 @@
 
   <!-- CÁC NÚT THỨ: CANH GIỮA -->
   <div class="days-tab-bar" role="tablist">
-    <button type="button" class="day-tab-btn" id="tab-btn-2" data-day="2" role="tab" aria-controls="list-periods">Thứ 2</button>
-    <button type="button" class="day-tab-btn" id="tab-btn-3" data-day="3" role="tab" aria-controls="list-periods">Thứ 3</button>
-    <button type="button" class="day-tab-btn" id="tab-btn-4" data-day="4" role="tab" aria-controls="list-periods">Thứ 4</button>
-    <button type="button" class="day-tab-btn" id="tab-btn-5" data-day="5" role="tab" aria-controls="list-periods">Thứ 5</button>
-    <button type="button" class="day-tab-btn" id="tab-btn-6" data-day="6" role="tab" aria-controls="list-periods">Thứ 6</button>
-    <button type="button" class="day-tab-btn" id="tab-btn-7" data-day="7" role="tab" aria-controls="list-periods">Thứ 7</button>
+    <button type="button" class="day-tab-btn" id="tab-btn-2" data-day="2" role="tab" aria-controls="list-periods">Thứ
+      2</button>
+    <button type="button" class="day-tab-btn" id="tab-btn-3" data-day="3" role="tab" aria-controls="list-periods">Thứ
+      3</button>
+    <button type="button" class="day-tab-btn" id="tab-btn-4" data-day="4" role="tab" aria-controls="list-periods">Thứ
+      4</button>
+    <button type="button" class="day-tab-btn" id="tab-btn-5" data-day="5" role="tab" aria-controls="list-periods">Thứ
+      5</button>
+    <button type="button" class="day-tab-btn" id="tab-btn-6" data-day="6" role="tab" aria-controls="list-periods">Thứ
+      6</button>
+    <button type="button" class="day-tab-btn" id="tab-btn-7" data-day="7" role="tab" aria-controls="list-periods">Thứ
+      7</button>
   </div>
 
   <!-- DANH SÁCH 5 TIẾT CHIỀU & THẺ GIẢI LAO ĐỒNG BỘ -->
@@ -1287,11 +1300,13 @@
     <p class="share-subtitle">Quét mã QR bằng điện thoại để mở ứng dụng ngay</p>
     <div class="share-qr-wrap">
       <svg class="share-qr-svg" viewBox="0 0 33 33" shape-rendering="crispEdges">
-        <path fill="#fff" d="M0 0h33v33H0z"/>
-        <path d="M2 2h7v1H2zM10 2h1v1H10zM12 2h1v1H12zM14 2h1v1H14zM20 2h1v1H20zM24 2h7v1H24zM2 3h1v6h-1zM8 3h1v6h-1zM11 3h1v2h-1zM18 3h2v2h-2zM22 3h1v1H22zM24 3h1v6h-1zM30 3h1v6h-1zM4 4h3v3h-3zM12 4h2v1H12zM15 4h1v1H15zM17 4h1v2h-1zM20 4h2v1H20zM26 4h3v3h-3zM10 5h1v7h-1zM14 5h1v7h-1zM16 5h1v6h-1zM18 5h1v2h-1zM20 5h1v1H20zM11 6h3v1H11zM15 6h1v2h-1zM21 6h2v1H21zM11 7h1v1H11zM13 7h1v1H13zM17 7h1v1H17zM19 7h1v1H19zM22 7h1v4h-1zM3 8h5v1H3zM12 8h1v3h-1zM18 8h1v1H18zM20 8h1v1H20zM25 8h5v1H25zM21 9h1v2h-1zM2 10h1v3h-1zM6 10h1v1H6zM8 10h2v1H8zM15 10h1v1H15zM17 10h1v1H17zM19 10h1v1H19zM23 10h5v1H23zM30 10h1v1H30zM4 11h2v1H4zM9 11h1v3h-1zM11 11h1v1H11zM13 11h1v3h-1zM24 11h1v2h-1zM26 11h1v2h-1zM28 11h1v2h-1zM3 12h1v1H3zM5 12h2v1H5zM8 12h1v1H8zM15 12h4v1H15zM20 12h2v4h-2zM23 12h1v3h-1zM25 12h1v1H25zM27 12h1v3h-1zM30 12h1v1H30zM6 13h2v1H6zM10 13h2v1H10zM14 13h2v3h-2zM17 13h3v1H17zM22 13h1v1H22zM2 14h2v3h-2zM6 14h1v2h-1zM8 14h1v1H8zM12 14h1v1H12zM19 14h1v1H19zM24 14h2v1H24zM28 14h2v1H28zM4 15h1v2h-1zM9 15h1v3h-1zM16 15h3v1H16zM22 15h1v1H22zM24 15h1v2h-1zM28 15h1v2h-1zM7 16h2v1H7zM11 16h4v1H11zM17 16h1v1H17zM20 16h1v1H20zM25 16h3v1H25zM29 16h1v3h-1zM5 17h1v4h-1zM7 17h1v1H7zM10 17h2v1H10zM16 17h1v2h-1zM21 17h2v3h-2zM8 18h1v1H8zM11 18h1v1H11zM14 18h2v1H14zM18 18h3v1H18zM23 18h1v1H23zM26 18h3v1H26zM2 19h3v1H2zM9 19h2v1H9zM13 19h1v1H13zM18 19h1v2h-1zM25 19h2v1H25zM28 19h1v2h-1zM6 20h1v1H6zM8 20h1v1H8zM10 20h1v2h-1zM14 20h4v1H14zM20 20h2v1H20zM24 20h1v1H24zM26 20h2v1H26zM29 20h2v1H29zM4 21h1v1H4zM7 21h1v1H7zM9 21h1v2h-1zM11 21h1v1H11zM13 21h1v1H13zM15 21h1v3h-1zM19 21h1v1H19zM21 21h3v2h-3zM29 21h1v1H29zM2 22h2v1H2zM8 22h1v1H8zM14 22h1v1H14zM24 22h3v1H24zM10 23h3v1H10zM16 23h1v1H16zM18 23h1v2h-1zM22 23h1v4h-1zM26 23h3v2h-3zM2 24h7v1H2zM10 24h2v1H10zM17 24h1v1H17zM20 24h2v1H20zM24 24h1v1H24zM30 24h1v1H30zM2 25h1v6h-1zM8 25h1v6h-1zM11 25h3v1H11zM16 25h1v2h-1zM19 25h2v2h-2zM26 25h1v2h-1zM28 25h2v1H28zM4 26h3v3h-3zM10 26h1v1H10zM13 26h1v2h-1zM15 26h1v1H15zM21 26h1v3h-1zM23 26h3v1H23zM27 26h1v2h-1zM30 26h1v1H30zM11 27h1v1H11zM14 27h1v1H14zM17 27h2v1H17zM20 27h1v4h-1zM25 27h1v1H25zM28 27h2v2h-2zM12 28h1v1H12zM15 28h1v1H15zM18 28h1v3h-1zM24 28h1v3h-1zM26 28h1v3h-1zM30 28h1v1H30zM11 29h1v1H11zM13 29h2v1H13zM19 29h1v2h-1zM22 29h1v1H22zM25 29h1v1H25zM27 29h2v1H27zM3 30h5v1H3zM10 30h1v1H10zM14 30h1v1H14zM29 30h1v1H29z"/>
+        <path fill="#fff" d="M0 0h33v33H0z" />
+        <path
+          d="M2 2h7v1H2zM10 2h1v1H10zM12 2h1v1H12zM14 2h1v1H14zM20 2h1v1H20zM24 2h7v1H24zM2 3h1v6h-1zM8 3h1v6h-1zM11 3h1v2h-1zM18 3h2v2h-2zM22 3h1v1H22zM24 3h1v6h-1zM30 3h1v6h-1zM4 4h3v3h-3zM12 4h2v1H12zM15 4h1v1H15zM17 4h1v2h-1zM20 4h2v1H20zM26 4h3v3h-3zM10 5h1v7h-1zM14 5h1v7h-1zM16 5h1v6h-1zM18 5h1v2h-1zM20 5h1v1H20zM11 6h3v1H11zM15 6h1v2h-1zM21 6h2v1H21zM11 7h1v1H11zM13 7h1v1H13zM17 7h1v1H17zM19 7h1v1H19zM22 7h1v4h-1zM3 8h5v1H3zM12 8h1v3h-1zM18 8h1v1H18zM20 8h1v1H20zM25 8h5v1H25zM21 9h1v2h-1zM2 10h1v3h-1zM6 10h1v1H6zM8 10h2v1H8zM15 10h1v1H15zM17 10h1v1H17zM19 10h1v1H19zM23 10h5v1H23zM30 10h1v1H30zM4 11h2v1H4zM9 11h1v3h-1zM11 11h1v1H11zM13 11h1v3h-1zM24 11h1v2h-1zM26 11h1v2h-1zM28 11h1v2h-1zM3 12h1v1H3zM5 12h2v1H5zM8 12h1v1H8zM15 12h4v1H15zM20 12h2v4h-2zM23 12h1v3h-1zM25 12h1v1H25zM27 12h1v3h-1zM30 12h1v1H30zM6 13h2v1H6zM10 13h2v1H10zM14 13h2v3h-2zM17 13h3v1H17zM22 13h1v1H22zM2 14h2v3h-2zM6 14h1v2h-1zM8 14h1v1H8zM12 14h1v1H12zM19 14h1v1H19zM24 14h2v1H24zM28 14h2v1H28zM4 15h1v2h-1zM9 15h1v3h-1zM16 15h3v1H16zM22 15h1v1H22zM24 15h1v2h-1zM28 15h1v2h-1zM7 16h2v1H7zM11 16h4v1H11zM17 16h1v1H17zM20 16h1v1H20zM25 16h3v1H25zM29 16h1v3h-1zM5 17h1v4h-1zM7 17h1v1H7zM10 17h2v1H10zM16 17h1v2h-1zM21 17h2v3h-2zM8 18h1v1H8zM11 18h1v1H11zM14 18h2v1H14zM18 18h3v1H18zM23 18h1v1H23zM26 18h3v1H26zM2 19h3v1H2zM9 19h2v1H9zM13 19h1v1H13zM18 19h1v2h-1zM25 19h2v1H25zM28 19h1v2h-1zM6 20h1v1H6zM8 20h1v1H8zM10 20h1v2h-1zM14 20h4v1H14zM20 20h2v1H20zM24 20h1v1H24zM26 20h2v1H26zM29 20h2v1H29zM4 21h1v1H4zM7 21h1v1H7zM9 21h1v2h-1zM11 21h1v1H11zM13 21h1v1H13zM15 21h1v3h-1zM19 21h1v1H19zM21 21h3v2h-3zM29 21h1v1H29zM2 22h2v1H2zM8 22h1v1H8zM14 22h1v1H14zM24 22h3v1H24zM10 23h3v1H10zM16 23h1v1H16zM18 23h1v2h-1zM22 23h1v4h-1zM26 23h3v2h-3zM2 24h7v1H2zM10 24h2v1H10zM17 24h1v1H17zM20 24h2v1H20zM24 24h1v1H24zM30 24h1v1H30zM2 25h1v6h-1zM8 25h1v6h-1zM11 25h3v1H11zM16 25h1v2h-1zM19 25h2v2h-2zM26 25h1v2h-1zM28 25h2v1H28zM4 26h3v3h-3zM10 26h1v1H10zM13 26h1v2h-1zM15 26h1v1H15zM21 26h1v3h-1zM23 26h3v1H23zM27 26h1v2h-1zM30 26h1v1H30zM11 27h1v1H11zM14 27h1v1H14zM17 27h2v1H17zM20 27h1v4h-1zM25 27h1v1H25zM28 27h2v2h-2zM12 28h1v1H12zM15 28h1v1H15zM18 28h1v3h-1zM24 28h1v3h-1zM26 28h1v3h-1zM30 28h1v1H30zM11 29h1v1H11zM13 29h2v1H13zM19 29h1v2h-1zM22 29h1v1H22zM25 29h1v1H25zM27 29h2v1H27zM3 30h5v1H3zM10 30h1v1H10zM14 30h1v1H14zM29 30h1v1H29z" />
       </svg>
     </div>
-    <a href="https://tkb.tanchanh.workers.dev" target="_blank" rel="noopener noreferrer" class="share-url-link">https://tkb.tanchanh.workers.dev</a>
+    <a href="https://tkb.tanchanh.workers.dev" target="_blank" rel="noopener noreferrer"
+      class="share-url-link">https://tkb.tanchanh.workers.dev</a>
     <button type="button" class="btn-action btn-copy-link" id="btn-copy-link">
       <span>📋 Sao chép link</span>
     </button>
@@ -1308,7 +1323,8 @@
 
       <!-- Ô nhập "Thêm môn học" và nút "Thêm" ngắn gọn, dứt khoát -->
       <div class="custom-subject-bar">
-        <input type="text" id="inp-custom-subject" class="custom-subject-input" placeholder="Thêm môn học" maxlength="15">
+        <input type="text" id="inp-custom-subject" class="custom-subject-input" placeholder="Thêm môn học"
+          maxlength="15">
         <button type="button" id="btn-add-custom-subject" class="btn-action btn-add-sub">Thêm</button>
       </div>
 
@@ -1367,12 +1383,12 @@
 
       // DỮ LIỆU THỜI KHOÁ BIỂU MẪU MỚI CHÍNH XÁC 100% CỦA BẠN
       const SAMPLE_TIMETABLE = {
-        "2": ["C.NGHỆ", "VĂN", "VĂN", "HĐ TN", "S H L"],
-        "3": ["TOÁN", "TOÁN", "KH TN", "ANH", "VẼ"],
-        "4": ["ĐỊA", "HĐ TN", "KH TN", "GD TC", "ANH"],
-        "5": ["C.NGHỆ", "GD CD", "VĂN", "ĐỊA", "TOÁN"],
-        "6": ["SỬ", "TOÁN", "GD ĐP", "ANH", "GD TC"],
-        "7": ["TIN", "VĂN", "NHẠC", "KH TN", "KH TN"]
+        "2": ["TOÁN", "TOÁN", "TIN", "KH TN", "S H L"],
+        "3": ["KH TN", "ANH", "TOÁN", "ĐỊA", "GD CD"],
+        "4": ["GD ĐP", "GD TC", "VĂN", "HĐ TN", "ANH"],
+        "5": ["VẼ", "VĂN", "VĂN", "ANH", "TOÁN"],
+        "6": ["SỬ", "KH TN", "KH TN", "HĐ TN", "C.NGHỆ"],
+        "7": ["C.NGHỆ", "SỬ", "GD TC", "VĂN", "NHẠC"]
       };
 
       // CHUẨN HOÁ DỮ LIỆU HỒ SƠ HỌC SINH
@@ -1667,9 +1683,9 @@
 
       function hasAnyModalOpen() {
         return modalPicker.classList.contains("open") ||
-               modalNamePrompt.classList.contains("open") ||
-               modalStudentActions.classList.contains("open") ||
-               modalConfirm.classList.contains("open");
+          modalNamePrompt.classList.contains("open") ||
+          modalStudentActions.classList.contains("open") ||
+          modalConfirm.classList.contains("open");
       }
 
       function getSubjectColorClass(name) {
@@ -1942,7 +1958,7 @@
 
         try {
           history.pushState({ modalOpen: true }, "");
-        } catch (e) {}
+        } catch (e) { }
 
         btnSheetClose.focus();
       }
@@ -1958,7 +1974,7 @@
         if (shouldTriggerBack && history.state && history.state.modalOpen) {
           try {
             history.back();
-          } catch (e) {}
+          } catch (e) { }
         }
 
         if (editTargetIndex !== null && periodCards[editTargetIndex]) {
@@ -2327,7 +2343,7 @@
         try {
           document.execCommand("copy");
           showShareToast();
-        } catch (e) {}
+        } catch (e) { }
         document.body.removeChild(temp);
       }
 
@@ -2624,4 +2640,5 @@
     })();
   </script>
 </body>
+
 </html>
